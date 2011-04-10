@@ -1,5 +1,7 @@
 package org.bio.calculator.calciumbuffer.client;
 
+import org.bio.calculator.calciumbuffer.client.ion.Ion;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -57,5 +59,8 @@ public class Calculator extends Composite {
 		Label lblConvergence = new Label("Convergence");
 		lblConvergence.setStylePrimaryName("convergence");
 		pnlResult.add(lblConvergence);
+		
+		Ion myIon = new Ion();
+		myIon.setType(Ion.Type.anion);
 	}
 }
