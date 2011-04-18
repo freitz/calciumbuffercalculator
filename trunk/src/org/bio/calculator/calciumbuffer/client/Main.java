@@ -12,5 +12,6 @@ public class Main implements EntryPoint {
 	 */
 	public void onModuleLoad() {
 		RootPanel.get().add(new Calculator());
+		RootPanel.get().add(new SolutionDisplay());
 	}
 }
