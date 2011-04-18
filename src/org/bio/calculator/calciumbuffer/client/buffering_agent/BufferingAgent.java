@@ -13,27 +13,19 @@ public class BufferingAgent {
         _isCationic = isCationic;
     }
 
-    public String Name
-    {
-        get { return _name; }
-        //set { _name = value; }
+    public String getName() {
+        return _name; 
     }
 
-    public double pKa
-    {
-        get { return _pKa; }
-        //set { _pKa = value; }
+    public double getpKa() {
+        return _pKa; 
     }
 
-    public boolean isCationic
-    {
-        get { return _isCationic; }
-        //set { _isCationic = value; }
+    public boolean getIsCationic () {
+        return _isCationic;
     }
 
-    public boolean isAnionic
-    {
-        get { return !_isCationic; }
-        //set { _isCationic = !value; }
+    public boolean getIsAnionic() {
+        return !_isCationic;
     }
 }

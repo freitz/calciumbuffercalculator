@@ -2,12 +2,14 @@ package org.bio.calculator.calciumbuffer.client.ion;
 
 public class Metal extends KeyIon {
 
-    private int _row;
-    private periodicTableColumn _column;
-    
 	public enum PeriodicTableColumn {
 		Ia, IIa
 	}
+	
+    private int _row;
+    private PeriodicTableColumn _column;
+    
+
     
     public Metal(String name, int row, PeriodicTableColumn column)
             : base(name, (int)column + 1, ionType.metal)
@@ -16,16 +18,12 @@ public class Metal extends KeyIon {
          _column = column;
      }
 
-     public int row
-     {
-          get { return _row; }
-          //set { _row = value; }
+     public int getRow() {
+          return row; 
      }
 
-     public periodicTableColumn column
-     {
-         get { return _column; }
-         //set { _column = value; }
+     public PeriodicTableColumn getColumn() {
+         return _column; 
      }
 	
 	
