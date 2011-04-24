@@ -1,58 +1,76 @@
 package org.bio.calculator.calciumbuffer.client.solute;
 
+import org.bio.calculator.calciumbuffer.client.ion.Ion;
+import org.bio.calculator.calciumbuffer.client.solution.BufferSolution;
+
 public class IonSolute
 {
-    private BufferSolution _bufferSolution;
-    private Ion _ion;
-    private double _freeConcentration;
-    private double _totalConcentration;
-    private state _state;
-    private double _sumBoundFree;
-    private double _ISC;
-
-    public IonSolute(BufferSolution bufferSolution, Ion ion, double concentration, state state)
+    protected BufferSolution bufferSolution;
+//    private Ion ion;
+    protected double freeConcentration;
+    protected double totalConcentration;
+    
+    public enum State {
+    	total, free
+    }
+    
+    protected State state;
+//    private double sumBoundFree;
+    protected double ISC;
+    
+    public IonSolute(BufferSolution bufferSolution, Ion ion, double concentration, State state)
     {
-        _bufferSolution = bufferSolution;
-        _ion = ion;
-        _state = state;
+        this.bufferSolution = bufferSolution;
+//        this.ion = ion;
+        this.state = state;
 
-        if (state == state.free)
+        if (state == State.free)
         {
-            _freeConcentration = concentration;
+            freeConcentration = concentration;
         } 
         else
         {
-            _totalConcentration = concentration;
+            totalConcentration = concentration;
         }
     }
 
-    public state state
+    public State getState ()
     {
-        get { return _state; }
-        //set { _state = value; }
+        return state; 
     }
 
-    public BufferSolution bufferSolution
+    public BufferSolution getBufferSolution()
     {
-        get { return _bufferSolution; }
-        //set { _bufferSolution = value; }
+        return bufferSolution; 
     }
 
-    public double freeConcentration
+    public double getFreeConcentration()
     {
-        get { return _freeConcentration; }
-        set { _freeConcentration = value; }
+        return freeConcentration; 
+    }
+    
+    public void setFreeConcentration (double newFreeConcentration)
+    {
+        freeConcentration = newFreeConcentration; 
     }
 
-    public double totalConcentration
+    public double getTotalConcentration()
     {
-        get { return _totalConcentration; }
-        set { _totalConcentration = value; }
+        return totalConcentration; 
     }
 
-    public double ISC
+    public void setTotalConcentration (double newTotalConcentration)
     {
-        get { return _ISC; }
-        set { _ISC = value; }
+        totalConcentration = newTotalConcentration; 
+    }
+
+    public double getISC ()
+    {
+        return ISC; 
+    }
+    
+    public void setISC (double newISC)
+    {
+    	ISC = newISC; 
     }
 }

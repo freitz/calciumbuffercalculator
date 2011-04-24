@@ -1,41 +1,49 @@
 package org.bio.calculator.calciumbuffer.client.solute;
 
+//import org.bio.calculator.calciumbuffer.client.ion.Ion.Type;
+import org.bio.calculator.calciumbuffer.client.ion.Metal;
+
 public class ComplexSolute
 {
-    private double _Kapp;
-    private double _meanSquareCharge;
-    private double _ISC;
-    private LigandSolute _ligandSolute;
-    private Metal _metal;
-    private double _concentration;
+    private double Kapp;
+    private double meanSquareCharge;
+    private double ISC;
+    private LigandSolute ligandSolute;
+    private Metal metal;
+    private double concentration;
 
     public ComplexSolute(LigandSolute ligandSolute, Metal metal)
     {
-        _ligandSolute = ligandSolute;
-        _metal = metal;
-        _Kapp = GetKapp();
-        _meanSquareCharge = GetKapp(true) / _Kapp;
+        this.ligandSolute = ligandSolute;
+        this.metal = metal;
+        Kapp = GetKapp();
+        meanSquareCharge = GetKapp(true) / Kapp;
     }
 
-    private double GetKapp(Boolean weightByCharge = false)
+    private double GetKapp()
+    {
+    	return GetKapp(false);
+    }
+    
+    private double GetKapp(Boolean weightByCharge)
     {
         double result = 0;
         double K = 1;
 
         for (int counter = 0; counter < 2; counter++)
         {
-            result += _ligandSolute.ligand.KM[_metal.row, (int)_metal.column, counter] * K * Math.Pow(_ligandSolute.bufferSolution.H, counter);
-            if (weightByCharge) { result *= Math.Pow(_ligandSolute.ligand.valence - _metal.valence - counter, 2); }
-            K *= _ligandSolute.ligand.KH[counter];
+            result += ligandSolute.getLigand().getKM()[metal.getRow()][ metal.getColumn()][ counter] * K * Math.pow(ligandSolute.getBufferSolution().getH(), counter);
+            if (weightByCharge) { result *= Math.pow(ligandSolute.getLigand().getValence() - metal.getValence() - counter, 2); }
+            K *= ligandSolute.getLigand().getKH()[counter];
         }
 
-        return result / (_ligandSolute.apparentFreeToTrueFreeRatio * _Kapp);
+        return result / (ligandSolute.apparentFreeToTrueFreeRatio * Kapp);
     }
 
     public void Update()
     {
-        _concentration = GetConcentration();
-        _ISC = GetISC();
+        this.concentration = GetConcentration();
+        ISC = GetISC();
     }
 
     private double GetConcentration()
@@ -48,15 +56,13 @@ public class ComplexSolute
         return 0; ////////////////////////////////////////////////////////////////////
     }
 
-    public double Kapp
+    public double getKapp ()
     {
-        get { return _Kapp; }
-        //set { _Kapp = value; }
+        return Kapp; 
     }
 
-    public double ISC
+    public double getISC ()
     {
-        get { return _ISC; }
-        //set { _ISC = value; }
+        return ISC; 
     }
 }

@@ -1,49 +1,48 @@
 package org.bio.calculator.calciumbuffer.client.solute;
 
+import org.bio.calculator.calciumbuffer.client.buffering_agent.BufferingAgent;
+import org.bio.calculator.calciumbuffer.client.solution.BufferSolution;
+
 public class BufferSolute
 {
-    private BufferSolution _bufferSolution;
-    private BufferingAgent _bufferingAgent;
-    private double _concentration;
-    private double _ISC;
+    private BufferSolution bufferSolution;
+    private BufferingAgent bufferingAgent;
+    private double concentration;
+    private double ISC;
 
     public BufferSolute(BufferSolution bufferSolution, BufferingAgent bufferingAgent, double concentration)
     {
-        _bufferSolution = bufferSolution;
-        _bufferingAgent = bufferingAgent;
-        _concentration = concentration;
-        _ISC = CalculateISC(this);
+        this.bufferSolution = bufferSolution;
+        this.bufferingAgent = bufferingAgent;
+        this.concentration = concentration;
+        ISC = CalculateISC(this);
     }
 
     private double CalculateISC(BufferSolute bufferSolute)
     {
-        double f = Math.Pow(10, bufferSolute.bufferSolution.pH - bufferSolute.bufferingAgent.pKa);
+        double f = Math.pow(10, bufferSolute.bufferSolution.getpH() - bufferSolute.bufferingAgent.getpKa());
         double ISC = bufferSolute.concentration * (1 / (1 + f)) / 2;
-        if (bufferSolute.bufferingAgent.isAnionic) ISC *= f;
+        if (bufferSolute.bufferingAgent.getIsAnionic()) ISC *= f;
         return ISC;
     }
 
-    public BufferSolution bufferSolution
+    public BufferSolution getBufferSolution ()
     {
-        get { return _bufferSolution; }
-        //set { _bufferSolution = value; }
+        return bufferSolution; 
     }
 
-    public BufferingAgent bufferingAgent
+    public BufferingAgent getBufferingAgent ()
     {
-        get { return _bufferingAgent; }
-        //set { _bufferingAgent = value; }
+        return bufferingAgent; 
     }
 
-    public double concentration
+    public double concentration ()
     {
-        get { return _concentration; }
-        //set { _concentration = value; }
+        return concentration; 
     }
 
-    public double ISC
+    public double getISC ()
     {
-        get { return _ISC; }
-        //set { _ISC = value; }
+        return ISC; 
     }
 }
