@@ -1,56 +1,66 @@
 package org.bio.calculator.calciumbuffer.client.solution;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bio.calculator.calciumbuffer.client.solute.IonSolute.State;
+import org.bio.calculator.calciumbuffer.client.solute.BufferSolute;
+import org.bio.calculator.calciumbuffer.client.solute.IonSolute;
+import org.bio.calculator.calciumbuffer.client.solute.LigandSolute;
+import org.bio.calculator.calciumbuffer.client.solute.MetalSolute;
+
 public class BufferSolution extends Solution {
 
-        private double _pH;
-        private double _H;
-        private double _temperature; // in Celsius
-        private List<BufferSolute> _bufferSoluteList = new List<BufferSolute>();
-        private List<LigandSolute> _ligandSoluteList = new List<LigandSolute>();
-        private List<MetalSolute> _metalSoluteList = new List<MetalSolute>();
-        private List<IonSolute> _anionSoluteList = new List<IonSolute>();
-        private double _ISC;
+        private double pH;
+        private double H;
+        private double temperature; // in Celsius
+        
+        private List<BufferSolute> bufferSoluteList = new ArrayList<BufferSolute>();
+        private List<LigandSolute> ligandSoluteList = new ArrayList<LigandSolute>();
+        private List<MetalSolute> metalSoluteList = new ArrayList<MetalSolute>();
+        private List<IonSolute> anionSoluteList = new ArrayList<IonSolute>();
+        private double ISC;
 
-        public BufferSolution(double pH, double ISC, double temperature)
+        public BufferSolution(double newpH, double newISC, double newTemperature)
         {
-            _pH = pH;
-            _temperature = temperature;
-            _ISC = ISC;
-            _H = CalculateH(pH, temperature, ISC);
+            pH = newpH;
+            temperature = newTemperature;
+            ISC = newISC;
+            H = CalculateH(pH, temperature, ISC);
         }
 
         public double CalculateH(double pH, double temperature, double ionicStrength)
         {
-            return Math.Pow(10,-pH)/ gammaH(temperature, ionicStrength);
+            return Math.pow(10,-pH)/ gammaH(temperature, ionicStrength);
         }
 
         private double gammaH(double temperature, double ionicStrength) // per Bers et al. eqn. 15:
         {
-            double B = 0.522932 * Math.Exp(0.0327016 * temperature) + 4.015942;
-            return 0.145045 * Math.Exp(-B * ionicStrength) + 0.063546 * Math.Exp(-43.97704 * ionicStrength) + 0.695634;
+            double B = 0.522932 * Math.exp(0.0327016 * temperature) + 4.015942;
+            return 0.145045 * Math.exp(-B * ionicStrength) + 0.063546 * Math.exp(-43.97704 * ionicStrength) + 0.695634;
         }
 
         public void Add(BufferSolute bufferSolute)
         {
-            _bufferSoluteList.Add(bufferSolute);
+            this.bufferSoluteList.add(bufferSolute);
         }
 
         public void Add(LigandSolute ligandSolute)
         {
-            _ligandSoluteList.Add(ligandSolute);
+            ligandSoluteList.add(ligandSolute);
         }
 
         public void Add(MetalSolute metalSolute)
         {
-            _metalSoluteList.Add(metalSolute);
+            metalSoluteList.add(metalSolute);
         }
 
         public void Add(IonSolute anionSolute)
         {
-            _anionSoluteList.Add(anionSolute);
+            anionSoluteList.add(anionSolute);
         }
 
-        public void UpdateConcentrations(state state)
+        public void UpdateConcentrations(State state)
         {
             //TODO -- MAIN ITERATED LOOP
             /*
@@ -67,61 +77,67 @@ public class BufferSolution extends Solution {
         {
             double sumISC = 0;
 
-            foreach (BufferSolute bufferSolute in bufferSolution.bufferSoluteList)
+            for (BufferSolute bufferSolute : bufferSolution.bufferSoluteList)
             {
-                sumISC += bufferSolute.ISC;
+                sumISC += bufferSolute.getISC();
             }
-            foreach (LigandSolute ligandSolute in bufferSolution.ligandSoluteList)
+            for (LigandSolute ligandSolute : bufferSolution.ligandSoluteList)
             {
-                sumISC += ligandSolute.ISC;
+                sumISC += ligandSolute.getISC();
             }
-            foreach (MetalSolute metalSolute in bufferSolution.metalSoluteList)
+            for (MetalSolute metalSolute : bufferSolution.metalSoluteList)
             {
-                sumISC += metalSolute.ISC;
+                sumISC += metalSolute.getISC();
             }
-            foreach (IonSolute anionSolute in bufferSolution.anionSoluteList)
+            for (IonSolute anionSolute : bufferSolution.anionSoluteList)
             {
-                sumISC += anionSolute.ISC;
+                sumISC += anionSolute.getISC();
             }
 
             return sumISC;
         }
 
-        public double pH
+        public double getpH ()
         {
-            get { return _pH; }
-            set { _pH = value; }
+            return pH; 
+        }
+        
+        public void setpH (double newpH)
+        {
+            pH = newpH;
+        }
+        
+        public double getH ()
+        {
+            return H; 
         }
 
-        public double H
+        public void setH (double newH)
         {
-            get { return _H; }
-            set { _H = value; }
+            H = newH;
         }
-
-        public List<BufferSolute> bufferSoluteList
+        
+        public List<BufferSolute> getBufferSoluteList ()
         {
-            get { return _bufferSoluteList; }
+            return bufferSoluteList; 
             //set { _bufferSoluteList = value; }
         }
 
-        public List<LigandSolute> ligandSoluteList
+        public List<LigandSolute> getLigandSoluteList ()
         {
-            get { return _ligandSoluteList; }
+            return ligandSoluteList; 
             //set { _ligandSoluteList = value; }
         }
 
-        public List<MetalSolute> metalSoluteList
+        public List<MetalSolute> getMetalSoluteList()
         {
-            get { return _metalSoluteList; }
+            return metalSoluteList; 
             //set { _metalSoluteList = value; }
         }
 
-        public List<IonSolute> anionSoluteList
+        public List<IonSolute> getAnionSoluteList()
         {
-            get { return _anionSoluteList; }
+            return anionSoluteList; 
             //set { _anionSoluteList = value; }
         }
-   
-	
 }

@@ -1,28 +1,25 @@
 package org.bio.calculator.calciumbuffer.client.ion;
 
-public class Ligand extends KeyIon {
+public class Ligand extends Ion {
 
+        private double[] KH;      //Ks for H; index 0-3 for K1, K2, K3, K4
+        private double[][][] KM;    //Ks for metal in row, col; indices are row, column, N
 
-        private double[] _KH;      //Ks for H; index 0-3 for K1, K2, K3, K4
-        private double[,,] _KM;    //Ks for metal in row, col; indices are row, column, N
-
-        public Ligand(string name, int valence, double[] KH, double[,,] KM):base(name, valence, ionType.ligand)
+        public Ligand(String name, int valence, double[] KH, double[][][] KM)
         {
-            _KH = KH;
-            _KM = KM;
+        	super(name, valence, Type.ligand);
+            this.KH = KH;
+            this.KM = KM;
         }
 
-        public double[] KH
+        public double[] getKH ()
         {
-            get { return _KH; }
+            return KH; 
             //set { _KH = value; }
         }
 
-        public double[,,] KM
+        public double[][][] getKM ()
         {
-            get { return _KM; }
-            //set { _KM = value; }
+            return KM; 
         }
-  
-	
 }

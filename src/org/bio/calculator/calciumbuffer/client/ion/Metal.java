@@ -1,30 +1,26 @@
 package org.bio.calculator.calciumbuffer.client.ion;
 
-public class Metal extends KeyIon {
+public class Metal extends Ion {
 
-	public enum PeriodicTableColumn {
-		Ia, IIa
-	}
+//	public enum PeriodicTableColumn {
+//		Ia, IIa
+//	}
 	
-    private int _row;
-    private PeriodicTableColumn _column;
+    private int row;
+    private int column;
     
-
-    
-    public Metal(String name, int row, PeriodicTableColumn column)
-            : base(name, (int)column + 1, ionType.metal)
-     {
-         _row = row;
-         _column = column;
+    public Metal(String name, int row, int column)
+    {
+    	super ( name, column + 1, Type.metal);
+        this.row = row;
+        this.column = column;
      }
 
      public int getRow() {
           return row; 
      }
 
-     public PeriodicTableColumn getColumn() {
-         return _column; 
+     public int getColumn() {
+         return column; 
      }
-	
-	
 }

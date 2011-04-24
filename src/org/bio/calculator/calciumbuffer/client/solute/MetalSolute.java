@@ -1,17 +1,21 @@
 package org.bio.calculator.calciumbuffer.client.solute;
 
+import org.bio.calculator.calciumbuffer.client.ion.Metal;
+import org.bio.calculator.calciumbuffer.client.solution.BufferSolution;
+
 public class MetalSolute extends IonSolute
 {
-    private Metal _metal;
+    private Metal metal;
 
-    public MetalSolute (BufferSolution bufferSolution, Metal metal, double concentration, state state):base(bufferSolution,metal,concentration,state)
+    public MetalSolute (BufferSolution bufferSolution, Metal metal, double concentration, State state)
     {
-        _metal = metal;
+    	super (bufferSolution,metal,concentration,state);
+        this.metal = metal;
     }
 
     public void Update()
     {
-        if (this.state == state.free)
+        if (this.state == State.free)
         {
             this.totalConcentration = GetTotal();
         }
@@ -40,16 +44,15 @@ public class MetalSolute extends IonSolute
     private double GetSumBoundPerFree()
     {
         double result = 1;
-        foreach (LigandSolute ligandSolute in this.bufferSolution.ligandSoluteList)
+        for (LigandSolute ligandSolute : bufferSolution.getLigandSoluteList())
         {
-            result += ligandSolute.complexSolutes[this.metal.row, (int)this.metal.column].Kapp * ligandSolute.freeConcentration;
+            result += ligandSolute.getComplexSolutes()[metal.getRow()][ metal.getColumn()].getKapp() * ligandSolute.freeConcentration;
         }
         return result;
     }
 
-    public Metal metal
+    public Metal getMetal ()
     {
-        get { return _metal; }
-        //set { _metal = value; }
+        return this.metal; 
     }
 }
