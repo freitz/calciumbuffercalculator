@@ -38,8 +38,6 @@ public class Calculator extends Composite {
 		lblTitle.setStylePrimaryName("title");
 	}
 
-	
-	
 	@UiHandler("btnCalculate")
 	void onBtnCalculateClick(ClickEvent event) {
 		pnlResult.clear();
@@ -221,10 +219,14 @@ public class Calculator extends Composite {
 		Phosphate_Ks[1][0][0] = .72;
 		
 		Ligand[] Ligands = null;
-		Ligands[0] = new Ligand("ATP" , 2 ,ATP_Ks);
-		Ligands[1] = new Ligand("EGTA", 4 ,EGTA_Ks);
-		Ligands[2] = new Ligand("HDTA", 4 ,HDTA_Ks);
-		Ligands[3] = new Ligand("CP"  , 2 ,CP_Ks);
+		Ligands[0] = new Ligand("ATP" , 	2 ,ATP_Ks		);
+		Ligands[1] = new Ligand("EGTA", 	4 ,EGTA_Ks		);
+		Ligands[2] = new Ligand("HDTA", 	4 ,HDTA_Ks		);
+		Ligands[3] = new Ligand("CP"  , 	2 ,CP_Ks		);
+		Ligands[4] = new Ligand("EDTA", 	4 ,EDTA_Ks		);
+		Ligands[5] = new Ligand("ADP" , 	3 ,ADP_Ks		);
+		Ligands[6] = new Ligand("Oxalate", 	2 ,Oxalate_Ks	);
+		Ligands[7] = new Ligand("Phosphate",2 ,Phosphate_Ks );
 		
 		BufferingAgent[] BufferingAgents = null;
 		BufferingAgents[0] = new BufferingAgent("TES", 7.4, true);
@@ -233,25 +235,25 @@ public class Calculator extends Composite {
 		// normally all ingredients should be added via drop-downs with text boxes for concentrations and buttons for free/total
 		//
 		
-		BufferSolution myBuffSol = new BufferSolution(7.1, .160, 25);
+		BufferSolution myBuffSol = new BufferSolution(7.1, .160, 25);   /* pH, ionic strength, temp just now specified */
 		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[3][1] 			/* Ca   */	, 0.000000010	, IonSolute.State.free));
 		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[4][1] 			/* Sr   */	, 0.000001   	, IonSolute.State.free));
 		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[2][1] 			/* Mg   */	, 0.00316228 	, IonSolute.State.free)); 
 		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[0]   			/* ATP  */	, 0.00316228	, IonSolute.State.free));
-		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[2][0] 			/* Na   */	, 0.00632456 	, IonSolute.State.total)); 
 		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[1]   			/* EGTA */	, 0.005			, IonSolute.State.total));
-		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[3][0] 			/* K    */	, 0.010      	, IonSolute.State.total));
 		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[2]   			/* HDTA */	, 0.005			, IonSolute.State.total));
-		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[3][0] 			/* K    */	, 0.010      	, IonSolute.State.total));
 		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[3]   			/* CP   */	, 0.012			, IonSolute.State.total));
-		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[2][0] 			/* Na   */	, 0.024      	, IonSolute.State.total));
 		myBuffSol.Add(new BufferSolute(myBuffSol, BufferingAgents[0]	/* TES */	, 0.300								   ));
-		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[3][0] 			/* K    */	, 0.015      	, IonSolute.State.total));
+		
+
+		/*
+		 * can't just enter however they want, it's not a whole species (e.g. K2SrEGTA) that is being controlled, 
+		 * it's the EGTA total and the Sr free, so it's reasonable to specify roles as an M2+E and M2+/Mg.  the math 
+		 * for each is identical though, so can iterate the equations first and decide what was added as what later
+		 */
 	
-		//
-		//	TODO:
-		// 	given myBuffSol, how to update & display results?
-		//
+		myBuffSol.Iterate(.000001);  //argument is convergence limit
+		
 		
 		/* 
 		 * 
@@ -271,12 +273,5 @@ public class Calculator extends Composite {
 		 *	[NaCl]added = 30.590 mM = 2[Na2CP]+2[Na2ATP]
 	     *
 		 */
-	}
-
-
-
-	private void Ks() {
-		// TODO Auto-generated method stub
-		
 	}
 }

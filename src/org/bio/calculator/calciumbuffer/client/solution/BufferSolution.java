@@ -28,6 +28,17 @@ public class BufferSolution extends Solution {
             ISC = newISC;
             H = CalculateH(pH, temperature, ISC);
         }
+        
+        public void Iterate(double convergenceCriterion)
+        {
+            /*
+             * last values = 0;
+             * foreach ligand in list, for each metal in list, update free & total
+             * check if converging or diverging; if diverging, error?
+             * check if converged; if so, done, report values
+             * last values = these values, goto 10
+             */
+        }
 
         public double CalculateH(double pH, double temperature, double ionicStrength)
         {
@@ -47,30 +58,17 @@ public class BufferSolution extends Solution {
 
         public void Add(LigandSolute ligandSolute)
         {
-            ligandSoluteList.add(ligandSolute);
+            this.ligandSoluteList.add(ligandSolute);
         }
 
         public void Add(MetalSolute metalSolute)
         {
-            metalSoluteList.add(metalSolute);
+            this.metalSoluteList.add(metalSolute);
         }
 
         public void Add(IonSolute anionSolute)
         {
-            anionSoluteList.add(anionSolute);
-        }
-
-        public void UpdateConcentrations(State state)
-        {
-            //TODO -- MAIN ITERATED LOOP
-            /*
-             * last values = 0;
-             * foreach ligand in list, for each metal in list, update free & total
-             * check if converging or diverging; if diverging, error?
-             * check if converged; if so, done, report values
-             * last values = these values, goto 10
-             */
-            //////////////////////////////////////////////////////////////////////////////////////////////////
+            this.anionSoluteList.add(anionSolute);
         }
 
         public double ISC(BufferSolution bufferSolution)  // might be used to find difference between sum-of-parts ISC and desired
