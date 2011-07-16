@@ -51,7 +51,7 @@ public class LigandSolute extends IonSolute
     {
         double K = 1;
         double result = 0;
-        int count = ligandSolute.ligand.getKH().length + 1;
+        int count = ligandSolute.ligand.getK()[0][0].length + 1;
 
         if (weightByCharge) { count--; }
 
@@ -59,7 +59,7 @@ public class LigandSolute extends IonSolute
         {
             result += K;
             if (weightByCharge) { result *= Math.pow(ligandSolute.ligand.getValence() - counter, 2); }
-            K *= ligandSolute.ligand.getKH()[counter] * ligandSolute.bufferSolution.getH();
+            K *= ligandSolute.ligand.getK()[0][0][counter] * ligandSolute.bufferSolution.getH();
         }
         return result;
     }

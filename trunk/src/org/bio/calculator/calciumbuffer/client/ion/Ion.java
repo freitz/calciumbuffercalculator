@@ -2,11 +2,15 @@ package org.bio.calculator.calciumbuffer.client.ion;
 
 public class Ion {
 
-    private String name;
+	public enum Type {
+		ligand, metal, anion, unknown
+	}
+    
+	private String name;
     protected int valence;
     protected Type type;
 	
-	public Ion()
+    public Ion()
 	{
 		this(Type.unknown);
 	}
@@ -23,10 +27,6 @@ public class Ion {
 		this.type = type;
 	}
 	
-	public enum Type {
-		ligand, metal, anion, unknown
-	}
-    
 	public void setName(String ionName) {
 		this.name = ionName;
 	}

@@ -32,9 +32,9 @@ public class ComplexSolute
 
         for (int counter = 0; counter < 2; counter++)
         {
-            result += ligandSolute.getLigand().getKM()[metal.getRow()][ metal.getColumn()][ counter] * K * Math.pow(ligandSolute.getBufferSolution().getH(), counter);
+            result += ligandSolute.getLigand().getK()[metal.getRow()][ metal.getColumn()][ counter] * K * Math.pow(ligandSolute.getBufferSolution().getH(), counter);
             if (weightByCharge) { result *= Math.pow(ligandSolute.getLigand().getValence() - metal.getValence() - counter, 2); }
-            K *= ligandSolute.getLigand().getKH()[counter];
+            K *= ligandSolute.getLigand().getK()[0][0][counter];
         }
 
         return result / (ligandSolute.apparentFreeToTrueFreeRatio * Kapp);
@@ -64,5 +64,10 @@ public class ComplexSolute
     public double getISC ()
     {
         return ISC; 
+    }    
+    
+    public double getMeanSquareCharge ()
+    {
+        return meanSquareCharge; 
     }
 }

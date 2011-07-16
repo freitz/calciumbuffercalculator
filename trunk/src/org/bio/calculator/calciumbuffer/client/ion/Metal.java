@@ -11,7 +11,7 @@ public class Metal extends Ion {
     
     public Metal(String name, int row, int column)
     {
-    	super ( name, column + 1, Type.metal);
+    	super ( name, column, Type.metal);
         this.row = row;
         this.column = column;
      }
