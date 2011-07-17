@@ -40,28 +40,9 @@ public class Calculator extends Composite {
 
 	@UiHandler("btnCalculate")
 	void onBtnCalculateClick(ClickEvent event) {
-		pnlResult.clear();
-		Grid tblResults = new Grid(2, 6);
-		tblResults.setBorderWidth(3);
-		tblResults.setCellPadding(1);
-		tblResults.setHTML(0, 0, "<b>Total Ca</b>");
-		tblResults.setHTML(0, 1, "<b>Total Mg</b>");
-		tblResults.setHTML(0, 2, "<b>Total EGTA</b>");
-		tblResults.setHTML(0, 3, "<b>Total pH</b>");
-		tblResults.setHTML(0, 4, "<b>Total Free Ca</b>");
-		tblResults.setHTML(0, 5, "<b>Total Free Mg</b>");
-		tblResults.setHTML(1, 0, "1");
-		tblResults.setHTML(1, 1, "1");
-		tblResults.setHTML(1, 2, "1");
-		tblResults.setHTML(1, 3, "1");
-		tblResults.setHTML(1, 4, "0.999994");
-		tblResults.setHTML(1, 5, "1");
-		pnlResult.add(tblResults);
-		pnlResult.add(new Label("CaEGTA = 5.73493e-06"));
-		pnlResult.add(new Label("MgEGTA = 6.31558e-08"));
-		Label lblConvergence = new Label("Convergence");
-		lblConvergence.setStylePrimaryName("convergence");
-		pnlResult.add(lblConvergence);
+
+		
+
 		
 		//
 		// define metals, ligands, buffer agents
@@ -254,9 +235,7 @@ public class Calculator extends Composite {
 	
 		myBuffSol.Iterate(.000001);  //argument is convergence limit
 		
-		
 		/* 
-		 * 
 		 * above should result in buffer of Fabiato & Fabiato (1979; program 2 testing) and give 
 	     *	
 		 *	[CP]total = 12 mM, added as Na2CP, so [Na2CP]added = 12 mM
@@ -271,7 +250,38 @@ public class Calculator extends Composite {
 		 *	15 mM KOH
 		 *	[K2H2EGTA]total = 5 mM, [K2H2HDTA]total = 5 mM
 		 *	[NaCl]added = 30.590 mM = 2[Na2CP]+2[Na2ATP]
-	     *
 		 */
+		
+		pnlResult.clear();
+		Grid tblResults = new Grid(2, 9);
+		tblResults.setBorderWidth(3);
+		tblResults.setCellPadding(1);
+
+		tblResults.setHTML(0, 0, "<b>Sr total</b>");
+		tblResults.setHTML(0, 1, "<b>ATP total</b>");
+		tblResults.setHTML(0, 2, "<b>Mg total</b>");
+		tblResults.setHTML(0, 3, "<b>Ca total</b>");
+		tblResults.setHTML(0, 4, "<b>KCl total</b>");	
+		tblResults.setHTML(0, 5, "<b>K total</b>");
+		tblResults.setHTML(0, 6, "<b>Na total</b>");
+		tblResults.setHTML(0, 7, "<b>SrEGTA</b>");
+		tblResults.setHTML(0, 8, "<b>CaEGTA</b>");
+		
+		tblResults.setHTML(1, 0, myBuffSol.getAnionSoluteList()[0].concentration);
+		tblResults.setHTML(1, 1, myBuffSol.getLigandSoluteList()[0].concentration);
+		tblResults.setHTML(1, 2, myBuffSol.getAnionSoluteList()[1].concentration);
+		tblResults.setHTML(1, 3, myBuffSol.getAnionSoluteList()[2].concentration);
+		tblResults.setHTML(1, 4, myBuffSol.getAnionSoluteList()[0].concentration);
+		tblResults.setHTML(1, 5, myBuffSol.getAnionSoluteList()[0].concentration);
+		tblResults.setHTML(1, 6, myBuffSol.getAnionSoluteList()[0].concentration);
+		tblResults.setHTML(1, 7, myBuffSol.getAnionSoluteList()[0].concentration);
+		tblResults.setHTML(1, 8, myBuffSol.getAnionSoluteList()[0].concentration);
+		
+		pnlResult.add(tblResults);
+		pnlResult.add(new Label("CaEGTA = 5.73493e-06"));
+		pnlResult.add(new Label("MgEGTA = 6.31558e-08"));
+		Label lblConvergence = new Label("Convergence");
+		lblConvergence.setStylePrimaryName("convergence");
+		pnlResult.add(lblConvergence);
 	}
 }
