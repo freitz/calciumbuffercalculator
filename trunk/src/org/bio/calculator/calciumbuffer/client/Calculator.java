@@ -266,7 +266,7 @@ public class Calculator extends Composite {
 		tblResults.setHTML(0, 6, "<b>Na total</b>");
 		tblResults.setHTML(0, 7, "<b>SrEGTA</b>");
 		tblResults.setHTML(0, 8, "<b>CaEGTA</b>");
-		
+		/*
 		tblResults.setHTML(1, 0, myBuffSol.getAnionSoluteList()[0].concentration);
 		tblResults.setHTML(1, 1, myBuffSol.getLigandSoluteList()[0].concentration);
 		tblResults.setHTML(1, 2, myBuffSol.getAnionSoluteList()[1].concentration);
@@ -276,7 +276,7 @@ public class Calculator extends Composite {
 		tblResults.setHTML(1, 6, myBuffSol.getAnionSoluteList()[0].concentration);
 		tblResults.setHTML(1, 7, myBuffSol.getAnionSoluteList()[0].concentration);
 		tblResults.setHTML(1, 8, myBuffSol.getAnionSoluteList()[0].concentration);
-		
+		*/
 		pnlResult.add(tblResults);
 		pnlResult.add(new Label("CaEGTA = 5.73493e-06"));
 		pnlResult.add(new Label("MgEGTA = 6.31558e-08"));
