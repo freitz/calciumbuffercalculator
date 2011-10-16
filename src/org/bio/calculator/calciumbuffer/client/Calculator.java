@@ -1,11 +1,16 @@
 package org.bio.calculator.calciumbuffer.client;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.bio.calculator.calciumbuffer.client.solution.*;
 import org.bio.calculator.calciumbuffer.client.solute.*;
 import org.bio.calculator.calciumbuffer.client.buffering_agent.BufferingAgent;
 import org.bio.calculator.calciumbuffer.client.ion.*;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dev.util.collect.HashMap;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -19,6 +24,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class Calculator extends Composite {
+	//public static final String Magnesium = "MG";
 
 	private static CalculatorUiBinder uiBinder = GWT
 			.create(CalculatorUiBinder.class);
@@ -41,7 +47,10 @@ public class Calculator extends Composite {
 	@UiHandler("btnCalculate")
 	void onBtnCalculateClick(ClickEvent event) {
 
-		
+		/*
+		Metal Mag = new Metal("Magnesium");
+		Ligand ATP = new Ligand("ATP", null);
+		ATP.addKConstants(Mag, new Double[]{0.0, 1.1});
 
 		
 		//
@@ -63,7 +72,7 @@ public class Calculator extends Composite {
 		Metals[6][0] = new Metal("Fr", 7, 1);
 		Metals[6][1] = new Metal("Ra", 7, 2);
 		
-		double[][][] ZeroKs = null;
+		double[][][] ZeroKs = new double[7][2][4];
 		for (int row = 0; row < 7; row++)
 		{
 			for (int col = 0; col < 2; col++)
@@ -92,6 +101,15 @@ public class Calculator extends Composite {
 		EGTA_Ks[4][1][1] = 4.37;
 
 		double[][][] ATP_Ks = ZeroKs;
+		Map<String, List<Double>> ATPKs = new HashMap<String, List<Double>>();
+		ATPKs.put(Magnesium, new ArrayList<Double>());
+		ATPKs.get(Magnesium).add(4.324);
+		ATPKs.get(Magnesium).add(2.74);
+		
+		if(ATPKs.containsKey(Magnesium)) { // if this ligand has a K for MG
+			
+		}
+		
 		// H
 		ATP_Ks[0][0][0] = 6.95;
 		ATP_Ks[0][0][1] = 4.05;
@@ -199,7 +217,9 @@ public class Calculator extends Composite {
 		// Li
 		Phosphate_Ks[1][0][0] = .72;
 		
-		Ligand[] Ligands = null;
+		//List<Ligand> list = new ArrayList<Ligand>();
+		//list.add(new Ligand("ATP" , 	2 ,ATP_Ks		));
+		Ligand[] Ligands = new Ligand[8];
 		Ligands[0] = new Ligand("ATP" , 	2 ,ATP_Ks		);
 		Ligands[1] = new Ligand("EGTA", 	4 ,EGTA_Ks		);
 		Ligands[2] = new Ligand("HDTA", 	4 ,HDTA_Ks		);
@@ -215,17 +235,17 @@ public class Calculator extends Composite {
 		//
 		// normally all ingredients should be added via drop-downs with text boxes for concentrations and buttons for free/total
 		//
-		
-		BufferSolution myBuffSol = new BufferSolution(7.1, .160, 25);   /* pH, ionic strength, temp just now specified */
-		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[3][1] 			/* Ca   */	, 0.000000010	, IonSolute.State.free));
-		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[4][1] 			/* Sr   */	, 0.000001   	, IonSolute.State.free));
-		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[2][1] 			/* Mg   */	, 0.00316228 	, IonSolute.State.free)); 
-		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[0]   			/* ATP  */	, 0.00316228	, IonSolute.State.free));
-		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[1]   			/* EGTA */	, 0.005			, IonSolute.State.total));
-		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[2]   			/* HDTA */	, 0.005			, IonSolute.State.total));
-		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[3]   			/* CP   */	, 0.012			, IonSolute.State.total));
-		myBuffSol.Add(new BufferSolute(myBuffSol, BufferingAgents[0]	/* TES */	, 0.300								   ));
-		
+		*/
+//		BufferSolution myBuffSol = new BufferSolution(7.1, .160, 25);   /* pH, ionic strength, temp just now specified */
+//		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[3][1] 			/* Ca   */	, 0.000000010	, IonSolute.State.free));
+//		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[4][1] 			/* Sr   */	, 0.000001   	, IonSolute.State.free));
+//		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[2][1] 			/* Mg   */	, 0.00316228 	, IonSolute.State.free)); 
+//		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[0]   			/* ATP  */	, 0.00316228	, IonSolute.State.free));
+//		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[1]   			/* EGTA */	, 0.005			, IonSolute.State.total));
+//		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[2]   			/* HDTA */	, 0.005			, IonSolute.State.total));
+//		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[3]   			/* CP   */	, 0.012			, IonSolute.State.total));
+//		myBuffSol.Add(new BufferSolute(myBuffSol, BufferingAgents[0]	/* TES */	, 0.300								   ));
+//		
 
 		/*
 		 * can't just enter however they want, it's not a whole species (e.g. K2SrEGTA) that is being controlled, 
@@ -233,7 +253,7 @@ public class Calculator extends Composite {
 		 * for each is identical though, so can iterate the equations first and decide what was added as what later
 		 */
 	
-		myBuffSol.Iterate(.000001);  //argument is convergence limit
+		//myBuffSol.Iterate(.000001);  //argument is convergence limit
 		
 		/* 
 		 * above should result in buffer of Fabiato & Fabiato (1979; program 2 testing) and give 
