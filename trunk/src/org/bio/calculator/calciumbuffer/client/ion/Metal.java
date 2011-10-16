@@ -1,5 +1,7 @@
 package org.bio.calculator.calciumbuffer.client.ion;
 
+import java.util.Map;
+
 public class Metal extends Ion {
 
 //	public enum PeriodicTableColumn {
@@ -8,6 +10,8 @@ public class Metal extends Ion {
 	
     private int row;
     private int column;
+    
+    private Map<Ligand, Double[]> kConstants = null;
     
     public Metal(String name, int row, int column)
     {
