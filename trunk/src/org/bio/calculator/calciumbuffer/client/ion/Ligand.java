@@ -1,8 +1,7 @@
 package org.bio.calculator.calciumbuffer.client.ion;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import com.google.gwt.dev.util.collect.HashMap;
 
 public class Ligand extends Ion {
 
