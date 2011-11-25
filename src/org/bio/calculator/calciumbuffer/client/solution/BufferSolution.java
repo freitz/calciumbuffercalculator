@@ -31,6 +31,12 @@ public class BufferSolution extends Solution {
         
         public void Iterate(double convergenceCriterion)
         {
+        	
+        	
+        	//TODO:  needs to fix ionic strength with KCl with each iteration
+        	
+        	
+        	
             /*
              * last values = 0;
              * foreach ligand in list, for each metal in list, update free & total
