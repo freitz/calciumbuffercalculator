@@ -181,19 +181,19 @@ public class Calculator extends Composite {
 		tblResults.setHTML(0, 7, "<b>SrEGTA</b>");
 		tblResults.setHTML(0, 8, "<b>CaEGTA</b>");
 		/*
-		tblResults.setHTML(1, 0, myBuffSol.getAnionSoluteList()[0].concentration);
-		tblResults.setHTML(1, 1, myBuffSol.getLigandSoluteList()[0].concentration);
-		tblResults.setHTML(1, 2, myBuffSol.getAnionSoluteList()[1].concentration);
-		tblResults.setHTML(1, 3, myBuffSol.getAnionSoluteList()[2].concentration);
-		tblResults.setHTML(1, 4, myBuffSol.getAnionSoluteList()[0].concentration);
-		tblResults.setHTML(1, 5, myBuffSol.getAnionSoluteList()[0].concentration);
-		tblResults.setHTML(1, 6, myBuffSol.getAnionSoluteList()[0].concentration);
-		tblResults.setHTML(1, 7, myBuffSol.getAnionSoluteList()[0].concentration);
-		tblResults.setHTML(1, 8, myBuffSol.getAnionSoluteList()[0].concentration);
+		tblResults.setHTML(1, 0, myBuffSol.getMetalSoluteList().get(0).getTotalConcentration().toString());
+		tblResults.setHTML(1, 1, myBuffSol.getMetalSoluteList().get(1).getTotalConcentration().toString());
+		tblResults.setHTML(1, 2, myBuffSol.getMetalSoluteList().get(2).getTotalConcentration().toString());
+		tblResults.setHTML(1, 3, myBuffSol.getLigandSoluteList().get(0).getTotalConcentration().toString());
+		tblResults.setHTML(1, 4, myBuffSol.getLigandSoluteList().get(1).getTotalConcentration().toString());
+		tblResults.setHTML(1, 5, myBuffSol.getLigandSoluteList().get(2).getTotalConcentration().toString());
+		tblResults.setHTML(1, 6, myBuffSol.getLigandSoluteList().get(3).getTotalConcentration().toString());
 		*/
+		tblResults.setHTML(1, 7, "???");
+		tblResults.setHTML(1, 8, "???");
+		
 		pnlResult.add(tblResults);
-		pnlResult.add(new Label("CaEGTA = 5.73493e-06"));
-		pnlResult.add(new Label("MgEGTA = 6.31558e-08"));
+		pnlResult.add(new Label("hello"));
 		Label lblConvergence = new Label("Convergence");
 		lblConvergence.setStylePrimaryName("convergence");
 		pnlResult.add(lblConvergence);

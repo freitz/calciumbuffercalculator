@@ -7,18 +7,18 @@ public class IonSolute
 {
     protected BufferSolution bufferSolution;
 //    private Ion ion;
-    protected double freeConcentration;
-    protected double totalConcentration;
+    protected Double freeConcentration;
+    protected Double totalConcentration;
     
     public enum State {
     	total, free
     }
     
     protected State state;
-//    private double sumBoundFree;
-    protected double ISC;
+//    private Double sumBoundFree;
+    protected Double ISC;
     
-    public IonSolute(BufferSolution bufferSolution, Ion ion, double concentration, State state)
+    public IonSolute(BufferSolution bufferSolution, Ion ion, Double concentration, State state)
     {
         this.bufferSolution = bufferSolution;
 //        this.ion = ion;
@@ -44,32 +44,32 @@ public class IonSolute
         return bufferSolution; 
     }
 
-    public double getFreeConcentration()
+    public Double getFreeConcentration()
     {
         return freeConcentration; 
     }
     
-    public void setFreeConcentration (double newFreeConcentration)
+    public void setFreeConcentration (Double newFreeConcentration)
     {
         freeConcentration = newFreeConcentration; 
     }
 
-    public double getTotalConcentration()
+    public Double getTotalConcentration()
     {
         return totalConcentration; 
     }
 
-    public void setTotalConcentration (double newTotalConcentration)
+    public void setTotalConcentration (Double newTotalConcentration)
     {
         totalConcentration = newTotalConcentration; 
     }
 
-    public double getISC ()
+    public Double getISC ()
     {
         return ISC; 
     }
     
-    public void setISC (double newISC)
+    public void setISC (Double newISC)
     {
     	ISC = newISC; 
     }
