@@ -1,6 +1,5 @@
 package org.bio.calculator.calciumbuffer.client.solute;
 
-//import org.bio.calculator.calciumbuffer.client.ion.Ion.Type;
 import org.bio.calculator.calciumbuffer.client.ion.Metal;
 
 public class ComplexSolute
@@ -32,7 +31,7 @@ public class ComplexSolute
 
         for (int counter = 0; counter < 2; counter++)
         {
-            result += ligandSolute.getLigand().getKConstantsFor(metal)[counter] * K * Math.pow(ligandSolute.getBufferSolution().getH(), counter);
+            result += ligandSolute.getLigand().getKsFor(metal)[counter] * K * Math.pow(ligandSolute.getBufferSolution().getH(), counter);
             if (weightByCharge) { result *= Math.pow(ligandSolute.getLigand().getValence() - metal.getValence() - counter, 2); }
             // TODO: what replaces getK()[0][0]?
             //K *= ligandSolute.getLigand().getK()[0][0][counter];

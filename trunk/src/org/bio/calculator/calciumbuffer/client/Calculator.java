@@ -1,5 +1,6 @@
 package org.bio.calculator.calciumbuffer.client;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +30,18 @@ public class Calculator extends Composite {
 	private static CalculatorUiBinder uiBinder = GWT
 			.create(CalculatorUiBinder.class);
 	@UiField Label lblTitle;
-	@UiField TextArea txtCalciumTotal;
+	@UiField TextArea txtpM2E;
+	@UiField TextArea txtpM2;
+	@UiField TextArea txtpMg;
+	@UiField TextArea txtpATP;
 	@UiField TextArea txtEGTATotal;
-	@UiField TextArea txtMagnesiumTotal;
-	@UiField TextArea txtPhLevel;
+	@UiField TextArea txtHDTATotal;
+	@UiField TextArea txtCPTotal;
+	@UiField TextArea txtpH;
+	@UiField TextArea txtTESTotal;
+	@UiField TextArea txtKOHAdded;
+	@UiField TextArea txtIonicStrength;
+	
 	@UiField Button btnCalculate;
 	@UiField VerticalPanel pnlResult;
 
@@ -47,213 +56,98 @@ public class Calculator extends Composite {
 	@UiHandler("btnCalculate")
 	void onBtnCalculateClick(ClickEvent event) {
 
-		/*
-		Metal Mag = new Metal("Magnesium");
-		Ligand ATP = new Ligand("ATP", null);
-		ATP.addKConstants(Mag, new Double[]{0.0, 1.1});
-
+		//TODO:  define metals, solutes, update & ISC for solutes, add to buffer, iterate, report all in buffersolution lists
 		
 		//
 		// define metals, ligands, buffer agents
 		//
+		
+		Metal H  = new Metal("H" , 1, 1);
+		Metal Li = new Metal("Li", 2, 1);
+		Metal Be = new Metal("Be", 2, 2);
+		Metal Na = new Metal("Na", 3, 1);
+		Metal Mg = new Metal("Mg", 3, 2);
+		Metal K  = new Metal("K" , 4, 1);
+		Metal Ca = new Metal("Ca", 4, 2);
+		Metal Rb = new Metal("Rb", 5, 1);
+		Metal Sr = new Metal("Sr", 5, 2);
+		Metal Cs = new Metal("Cs", 6, 1);
+		Metal Ba = new Metal("Ba", 6, 2);
+		Metal Fr = new Metal("Fr", 7, 1);
+		Metal Ra = new Metal("Ra", 7, 2);
+		
+		Ligand EGTA = new Ligand("EGTA",null);
+		EGTA.addKs(H,  new Double[]{9.46  , 8.85, 2.68, 2.00});
+		EGTA.addKs(Ca, new Double[]{10.716, 5.33});
+		EGTA.addKs(Mg, new Double[]{5.21  , 3.37});
+		EGTA.addKs(Sr, new Double[]{8.50  , 4.37});		
+		
+		Ligand ATP = new Ligand("ATP",null);
+		ATP.addKs(H,  new Double[]{6.95 , 4.05, 1.00, 1.00});
+		ATP.addKs(Ca, new Double[]{3.982, 1.80});
+		ATP.addKs(Mg, new Double[]{4.324, 2.74});
+		ATP.addKs(Sr, new Double[]{3.60 , 2.05});
+		ATP.addKs(K,  new Double[]{0.903,-0.30});
+		ATP.addKs(Na, new Double[]{0.944, 0.602});
+		ATP.addKs(Li, new Double[]{1.69 , 0.778});
 
-		Metal[][] Metals = null;
-		Metals[0][0] = new Metal("H" , 1, 1);
-		Metals[1][0] = new Metal("Li", 2, 1);
-		Metals[1][1] = new Metal("Be", 2, 2);
-		Metals[2][0] = new Metal("Na", 3, 1);
-		Metals[2][1] = new Metal("Mg", 3, 2);
-		Metals[3][0] = new Metal("K" , 4, 1);
-		Metals[3][1] = new Metal("Ca", 4, 2);
-		Metals[4][0] = new Metal("Rb", 5, 1);
-		Metals[4][1] = new Metal("Sr", 5, 2);
-		Metals[5][0] = new Metal("Cs", 6, 1);
-		Metals[5][1] = new Metal("Ba", 6, 2);
-		Metals[6][0] = new Metal("Fr", 7, 1);
-		Metals[6][1] = new Metal("Ra", 7, 2);
+		Ligand CP = new Ligand("CP",null);
+		CP.addKs(H,  new Double[]{4.58, 2.70});
+		CP.addKs(Ca, new Double[]{1.15});
+		CP.addKs(Mg, new Double[]{1.3});
+		CP.addKs(Sr, new Double[]{1.08});	
 		
-		double[][][] ZeroKs = new double[7][2][4];
-		for (int row = 0; row < 7; row++)
-		{
-			for (int col = 0; col < 2; col++)
-			{
-				for (int N = 0; N < 4; N++)
-				{
-					ZeroKs[row][col][N] = 0;
-				}
-			}
-		}
+		Ligand HDTA = new Ligand("HDTA",null);
+		HDTA.addKs(H,  new Double[]{10.81, 9.79, 2.70, 2.20});
+		HDTA.addKs(Ca, new Double[]{4.60 , 3.70});
+		HDTA.addKs(Mg, new Double[]{4.80 , 3.66});
 		
-		double [][][] EGTA_Ks = ZeroKs;
-		// H
-		EGTA_Ks[0][0][0] = 9.46;
-		EGTA_Ks[0][0][1] = 8.85;
-		EGTA_Ks[0][0][2] = 2.68;
-		EGTA_Ks[0][0][3] = 2.00;
-		// Ca
-		EGTA_Ks[3][1][0] = 10.716;
-		EGTA_Ks[3][1][1] = 5.33;
-		// Mg
-		EGTA_Ks[2][1][0] = 5.21;
-		EGTA_Ks[2][1][1] = 3.37;
-		// Sr
-		EGTA_Ks[4][1][0] = 8.5;
-		EGTA_Ks[4][1][1] = 4.37;
-
-		double[][][] ATP_Ks = ZeroKs;
-		Map<String, List<Double>> ATPKs = new HashMap<String, List<Double>>();
-		ATPKs.put(Magnesium, new ArrayList<Double>());
-		ATPKs.get(Magnesium).add(4.324);
-		ATPKs.get(Magnesium).add(2.74);
+		Ligand EDTA = new Ligand("EDTA",null);
+		EDTA.addKs(H,  new Double[]{10.26, 6.16, 2.67, 1.99});
+		EDTA.addKs(Ca, new Double[]{10.70, 3.51});
+		EDTA.addKs(Mg, new Double[]{8.69 , 2.28});
+		EDTA.addKs(Sr, new Double[]{8.63 , 2.30});	
 		
-		if(ATPKs.containsKey(Magnesium)) { // if this ligand has a K for MG
-			
-		}
+		Ligand ADP = new Ligand("ADP",null);
+		ADP.addKs(H,  new Double[]{6.68, 3.99, 1.00});
+		ADP.addKs(Ca, new Double[]{2.81, 1.52});
+		ADP.addKs(Mg, new Double[]{3.00, 1.45});
+		ADP.addKs(Sr, new Double[]{2.50, 1.34});	
 		
-		// H
-		ATP_Ks[0][0][0] = 6.95;
-		ATP_Ks[0][0][1] = 4.05;
-		ATP_Ks[0][0][2] = 1;
-		ATP_Ks[0][0][3] = 1;
-		// Ca
-		ATP_Ks[3][1][0] = 3.982;
-		ATP_Ks[3][1][1] = 1.8;
-		// Mg
-		ATP_Ks[2][1][0] = 4.324;
-		ATP_Ks[2][1][1] = 2.74;
-		// Sr
-		ATP_Ks[4][1][0] = 3.6;
-		ATP_Ks[4][1][1] = 2.05;
-		// K
-		ATP_Ks[3][0][0] = 0.903;
-		ATP_Ks[3][0][1] = -.3;		
-		// Na
-		ATP_Ks[2][0][0] = 0.944;
-		ATP_Ks[2][0][1] = 0.602;		
-		// Li
-		ATP_Ks[1][0][0] = 1.69;
-		ATP_Ks[1][0][1] = 0.778;
+		Ligand C2H2O4 = new Ligand("C2H2O4",null);
+		C2H2O4.addKs(H,  new Double[]{3.81, 1.37});
+		C2H2O4.addKs(Ca, new Double[]{3.00});
+		C2H2O4.addKs(Mg, new Double[]{2.55});
+		C2H2O4.addKs(Sr, new Double[]{2.54});	
 		
-		double[][][] CP_Ks = ZeroKs;
-		// H
-		CP_Ks[0][0][0] = 4.58;
-		CP_Ks[0][0][1] = 2.7;
-		// Ca
-		CP_Ks[3][1][0] = 1.15;
-		// Mg
-		CP_Ks[2][1][0] = 1.3;
-		// Sr
-		CP_Ks[4][1][0] = 1.08;
+		Ligand HPO4 = new Ligand("HPO4",null);
+		HPO4.addKs(H,  new Double[]{6.71, 2.1});
+		HPO4.addKs(Ca, new Double[]{1.70});
+		HPO4.addKs(Mg, new Double[]{1.88});
+		HPO4.addKs(Sr, new Double[]{1.52});
+		HPO4.addKs(K,  new Double[]{0.49});
+		HPO4.addKs(Na, new Double[]{0.60});
+		HPO4.addKs(Li, new Double[]{0.72});
 		
-		double[][][] HDTA_Ks = ZeroKs;
-		// H
-		HDTA_Ks[0][0][0] = 10.81;
-		HDTA_Ks[0][0][1] = 9.79;
-		HDTA_Ks[0][0][2] = 2.7;
-		HDTA_Ks[0][0][3] = 2.20;
-		// Ca
-		HDTA_Ks[3][1][0] = 4.6;
-		HDTA_Ks[3][1][1] = 3.7;
-		// Mg
-		HDTA_Ks[2][1][0] = 4.8;
-		HDTA_Ks[2][1][1] = 3.66;
+		BufferingAgent TES = new BufferingAgent("TES", 7.4, true);
 		
-		double[][][] EDTA_Ks = ZeroKs;
-		// H
-		EDTA_Ks[0][0][0] = 10.26;
-		EDTA_Ks[0][0][1] = 6.16;
-		EDTA_Ks[0][0][2] = 2.67;
-		EDTA_Ks[0][0][3] = 1.99;
-		// Ca
-		EDTA_Ks[3][1][0] = 10.7;
-		EDTA_Ks[3][1][1] = 3.51;
-		// Mg
-		EDTA_Ks[2][1][0] = 8.69;
-		EDTA_Ks[2][1][1] = 2.28;
-		// Sr
-		EDTA_Ks[4][1][0] = 8.63;
-		EDTA_Ks[4][1][1] = 2.3;
-		
-		double[][][] ADP_Ks = ZeroKs;
-		// H
-		ADP_Ks[0][0][0] = 6.68;
-		ADP_Ks[0][0][1] = 3.99;
-		ADP_Ks[0][0][2] = 1.00;
-		// Ca
-		ADP_Ks[3][1][0] = 2.81;
-		ADP_Ks[3][1][1] = 1.52;
-		// Mg
-		ADP_Ks[2][1][0] = 3;
-		ADP_Ks[2][1][1] = 1.45;
-		// Sr
-		ADP_Ks[4][1][0] = 2.5;
-		ADP_Ks[4][1][1] = 1.34;
-		
-		double[][][] Oxalate_Ks = ZeroKs;
-		// H
-		Oxalate_Ks[0][0][0] = 3.81;
-		Oxalate_Ks[0][0][1] = 1.37;
-		// Ca
-		Oxalate_Ks[3][1][0] = 3;
-		// Mg
-		Oxalate_Ks[2][1][0] = 2.55;
-		// Sr
-		Oxalate_Ks[4][1][0] = 2.54;
-		
-		double[][][] Phosphate_Ks = ZeroKs;
-		// H
-		Phosphate_Ks[0][0][0] = 6.71;
-		Phosphate_Ks[0][0][1] = 2.1;
-		// Ca
-		Phosphate_Ks[3][1][0] = 1.7;
-		// Mg
-		Phosphate_Ks[2][1][0] = 1.88;
-		// Sr
-		Phosphate_Ks[4][1][0] = 1.52;
-		// K
-		Phosphate_Ks[3][0][0] = .49;		
-		// Na
-		Phosphate_Ks[2][0][0] = 0.6;	
-		// Li
-		Phosphate_Ks[1][0][0] = .72;
-		
-		//List<Ligand> list = new ArrayList<Ligand>();
-		//list.add(new Ligand("ATP" , 	2 ,ATP_Ks		));
-		Ligand[] Ligands = new Ligand[8];
-		Ligands[0] = new Ligand("ATP" , 	2 ,ATP_Ks		);
-		Ligands[1] = new Ligand("EGTA", 	4 ,EGTA_Ks		);
-		Ligands[2] = new Ligand("HDTA", 	4 ,HDTA_Ks		);
-		Ligands[3] = new Ligand("CP"  , 	2 ,CP_Ks		);
-		Ligands[4] = new Ligand("EDTA", 	4 ,EDTA_Ks		);
-		Ligands[5] = new Ligand("ADP" , 	3 ,ADP_Ks		);
-		Ligands[6] = new Ligand("Oxalate", 	2 ,Oxalate_Ks	);
-		Ligands[7] = new Ligand("Phosphate",2 ,Phosphate_Ks );
-		
-		BufferingAgent[] BufferingAgents = null;
-		BufferingAgents[0] = new BufferingAgent("TES", 7.4, true);
+		//if(ATPKs.containsKey(Magnesium)) { // if this ligand has a K for MG
 	
 		//
 		// normally all ingredients should be added via drop-downs with text boxes for concentrations and buttons for free/total
 		//
-		*/
-//		BufferSolution myBuffSol = new BufferSolution(7.1, .160, 25);   /* pH, ionic strength, temp just now specified */
-//		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[3][1] 			/* Ca   */	, 0.000000010	, IonSolute.State.free));
-//		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[4][1] 			/* Sr   */	, 0.000001   	, IonSolute.State.free));
-//		myBuffSol.Add(new MetalSolute( myBuffSol, Metals[2][1] 			/* Mg   */	, 0.00316228 	, IonSolute.State.free)); 
-//		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[0]   			/* ATP  */	, 0.00316228	, IonSolute.State.free));
-//		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[1]   			/* EGTA */	, 0.005			, IonSolute.State.total));
-//		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[2]   			/* HDTA */	, 0.005			, IonSolute.State.total));
-//		myBuffSol.Add(new LigandSolute(myBuffSol, Ligands[3]   			/* CP   */	, 0.012			, IonSolute.State.total));
-//		myBuffSol.Add(new BufferSolute(myBuffSol, BufferingAgents[0]	/* TES */	, 0.300								   ));
-//		
-
-		/*
-		 * can't just enter however they want, it's not a whole species (e.g. K2SrEGTA) that is being controlled, 
-		 * it's the EGTA total and the Sr free, so it's reasonable to specify roles as an M2+E and M2+/Mg.  the math 
-		 * for each is identical though, so can iterate the equations first and decide what was added as what later
-		 */
+		
+		BufferSolution myBuffSol = new BufferSolution(7.1, .160, 25);   /* pH, ionic strength, temp just now specified */
+		myBuffSol.Add(new MetalSolute( myBuffSol, Ca  , 0.000000010, IonSolute.State.free ));
+		myBuffSol.Add(new MetalSolute( myBuffSol, Sr  , 0.000001   , IonSolute.State.free ));
+		myBuffSol.Add(new MetalSolute( myBuffSol, Mg  , 0.00316228 , IonSolute.State.free )); 
+		myBuffSol.Add(new LigandSolute(myBuffSol, ATP , 0.00316228 , IonSolute.State.free ));
+		myBuffSol.Add(new LigandSolute(myBuffSol, EGTA, 0.005	   , IonSolute.State.total));
+		myBuffSol.Add(new LigandSolute(myBuffSol, HDTA, 0.005	   , IonSolute.State.total));
+		myBuffSol.Add(new LigandSolute(myBuffSol, CP  , 0.012	   , IonSolute.State.total));
+		myBuffSol.Add(new BufferSolute(myBuffSol, TES , 0.300		                      ));	
 	
-		//myBuffSol.Iterate(.000001);  //argument is convergence limit
+		myBuffSol.Iterate(.000001);  //argument is convergence limit
 		
 		/* 
 		 * above should result in buffer of Fabiato & Fabiato (1979; program 2 testing) and give 
@@ -263,7 +157,7 @@ public class Calculator extends Composite {
 		 *	[Ca]total = 160.987 uM so [CaCl2]added = 16 nM
 		 *	[K2SrEGTA]added = 99.486 uM
 		 *	[Sr]total = 100.811 uM so [SrCl2]added = 1.325 uM
-		 *   [KCl]added = 58.734 mM
+		 *  [KCl]added = 58.734 mM
 		 *	[Na2ATP]added = 3.295 mM
 		 *	[Mg]added = 7.862 mM 
 		 *	TES 30 mM
