@@ -7,52 +7,38 @@ public class MetalSolute extends IonSolute
 {
     private Metal metal;
 
-    public MetalSolute (BufferSolution bufferSolution, Metal metal, double concentration, State state)
+    public MetalSolute (BufferSolution bufferSolution, Metal metal, Double concentration, State state)
     {
-    	super (bufferSolution,metal,concentration,state);
+    	super (bufferSolution, metal, concentration, state);
         this.metal = metal;
+        charge = (Double) (double) metal.getColumn();
     }
 
     public void Update()
     {
         if (this.state == State.free)
         {
-            this.totalConcentration = GetTotal();
+            this.totalConcentration = freeConcentration * calculateSumBoundPerFree();
         }
         else
         {
-            this.freeConcentration = GetFree();
+            this.freeConcentration = totalConcentration / calculateSumBoundPerFree();
         }
-        this.ISC = GetISC();
+        this.ISC = calculateISC();
     }
-
-    private double GetISC()
+    
+    private Double calculateSumBoundPerFree()
     {
-        return 0;///////////////////////////////////////////////////////////////////////////
-    }
-
-    private double GetFree()
-    {
-        return this.totalConcentration / GetSumBoundPerFree();
-    }
-
-    private double GetTotal()
-    {
-        return this.freeConcentration * GetSumBoundPerFree();
-    }
-
-    private double GetSumBoundPerFree()
-    {
-        double result = 1;
+        Double result = 1.0;
         for (LigandSolute ligandSolute : bufferSolution.getLigandSoluteList())
         {
-            result += ligandSolute.getComplexSolutes()[metal.getRow()][ metal.getColumn()].getKapp() * ligandSolute.freeConcentration;
+            result += ligandSolute.getComplexes().get(metal).getKapp() * ligandSolute.freeConcentration;
         }
         return result;
     }
-
-    public Metal getMetal ()
+    
+    public Metal getMetal()
     {
-        return this.metal; 
+        return metal; 
     }
 }

@@ -1,73 +1,38 @@
 package org.bio.calculator.calciumbuffer.client.solute;
 
-import org.bio.calculator.calciumbuffer.client.ion.Metal;
-
-public class ComplexSolute
+public class ComplexSolute extends LigandSolute
 {
-    private double Kapp;
-    private double meanSquareCharge;
-    private double ISC;
+    private Double Kapp;
+    private MetalSolute metalSolute;
     private LigandSolute ligandSolute;
-    private Metal metal;
-    private double concentration;
-
-    public ComplexSolute(LigandSolute ligandSolute, Metal metal)
+    
+    public ComplexSolute(LigandSolute ligandSolute, MetalSolute metalSolute)
     {
-        this.ligandSolute = ligandSolute;
-        this.metal = metal;
-        Kapp = GetKapp();
-        meanSquareCharge = GetKapp(true) / Kapp;
+    	super (ligandSolute.getBufferSolution(), ligandSolute.getLigand(), 0.0, IonSolute.State.total);
+        SUM = calculateSUM(2);
+        charge = calculateWeightedSUM(2) / SUM; //i.e. mean square charge
+        Kapp = SUM/ligandSolute.SUM; 
     }
-
-    private double GetKapp()
+  
+    protected Double calculateSUMTerm(int N)
     {
-    	return GetKapp(false);
+    	return super.calculateSUMTerm(N) * ligandSolute.getLigand().getKsFor(metalSolute.getMetal())[N];
     }
     
-    private double GetKapp(Boolean weightByCharge)
+    protected Double calculateWeightedSUMTerm(int N)
     {
-        double result = 0;
-        double K = 1;
-
-        for (int counter = 0; counter < 2; counter++)
-        {
-            result += ligandSolute.getLigand().getKsFor(metal)[counter] * K * Math.pow(ligandSolute.getBufferSolution().getH(), counter);
-            if (weightByCharge) { result *= Math.pow(ligandSolute.getLigand().getValence() - metal.getValence() - counter, 2); }
-            // TODO: what replaces getK()[0][0]?
-            //K *= ligandSolute.getLigand().getK()[0][0][counter];
-        }
-
-        return result / (ligandSolute.apparentFreeToTrueFreeRatio * Kapp);
+    	return this.calculateSUMTerm(N) * (ligandSolute.getLigand().getValence() - metalSolute.getMetal().getValence());
     }
-
-    public void Update()
+    
+    public void update()
     {
-        this.concentration = GetConcentration();
-        ISC = GetISC();
+    	totalConcentration = Kapp * ligandSolute.freeConcentration * metalSolute.freeConcentration;
+    	freeConcentration = totalConcentration;
+        ISC = calculateISC();
     }
-
-    private double GetConcentration()
-    {
-        return 0; ////////////////////////////////////////////////////////////////////
-    }
-
-    private double GetISC()
-    {
-        return 0; ////////////////////////////////////////////////////////////////////
-    }
-
-    public double getKapp ()
+    
+    public Double getKapp()
     {
         return Kapp; 
-    }
-
-    public double getISC ()
-    {
-        return ISC; 
-    }    
-    
-    public double getMeanSquareCharge ()
-    {
-        return meanSquareCharge; 
-    }
+    } 
 }
