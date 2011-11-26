@@ -1,17 +1,11 @@
 package org.bio.calculator.calciumbuffer.client;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.bio.calculator.calciumbuffer.client.solution.*;
 import org.bio.calculator.calciumbuffer.client.solute.*;
 import org.bio.calculator.calciumbuffer.client.buffering_agent.BufferingAgent;
 import org.bio.calculator.calciumbuffer.client.ion.*;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dev.util.collect.HashMap;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -62,27 +56,27 @@ public class Calculator extends Composite {
 		// define metals, ligands, buffer agents
 		//
 		
-		Metal H  = new Metal("H" , 1, 1);
-		Metal Li = new Metal("Li", 2, 1);
-		Metal Be = new Metal("Be", 2, 2);
-		Metal Na = new Metal("Na", 3, 1);
-		Metal Mg = new Metal("Mg", 3, 2);
-		Metal K  = new Metal("K" , 4, 1);
-		Metal Ca = new Metal("Ca", 4, 2);
-		Metal Rb = new Metal("Rb", 5, 1);
-		Metal Sr = new Metal("Sr", 5, 2);
-		Metal Cs = new Metal("Cs", 6, 1);
-		Metal Ba = new Metal("Ba", 6, 2);
-		Metal Fr = new Metal("Fr", 7, 1);
-		Metal Ra = new Metal("Ra", 7, 2);
+		Metal H  = new Metal("H" , 1);
+		Metal Li = new Metal("Li", 1);
+		Metal Be = new Metal("Be", 2);
+		Metal Na = new Metal("Na", 1);
+		Metal Mg = new Metal("Mg", 2);
+		Metal K  = new Metal("K" , 1);
+		Metal Ca = new Metal("Ca", 2);
+		Metal Rb = new Metal("Rb", 1);
+		Metal Sr = new Metal("Sr", 2);
+		Metal Cs = new Metal("Cs", 1);
+		Metal Ba = new Metal("Ba", 2);
+		Metal Fr = new Metal("Fr", 1);
+		Metal Ra = new Metal("Ra", 2);
 		
-		Ligand EGTA = new Ligand("EGTA",null);
+		Ligand EGTA = new Ligand("EGTA", null, 4);
 		EGTA.addKs(H,  new Double[]{9.46  , 8.85, 2.68, 2.00});
 		EGTA.addKs(Ca, new Double[]{10.716, 5.33});
 		EGTA.addKs(Mg, new Double[]{5.21  , 3.37});
 		EGTA.addKs(Sr, new Double[]{8.50  , 4.37});		
 		
-		Ligand ATP = new Ligand("ATP",null);
+		Ligand ATP = new Ligand("ATP", null, 4);
 		ATP.addKs(H,  new Double[]{6.95 , 4.05, 1.00, 1.00});
 		ATP.addKs(Ca, new Double[]{3.982, 1.80});
 		ATP.addKs(Mg, new Double[]{4.324, 2.74});
@@ -91,36 +85,36 @@ public class Calculator extends Composite {
 		ATP.addKs(Na, new Double[]{0.944, 0.602});
 		ATP.addKs(Li, new Double[]{1.69 , 0.778});
 
-		Ligand CP = new Ligand("CP",null);
+		Ligand CP = new Ligand("CP", null, 2);
 		CP.addKs(H,  new Double[]{4.58, 2.70});
 		CP.addKs(Ca, new Double[]{1.15});
 		CP.addKs(Mg, new Double[]{1.3});
 		CP.addKs(Sr, new Double[]{1.08});	
 		
-		Ligand HDTA = new Ligand("HDTA",null);
+		Ligand HDTA = new Ligand("HDTA", null, 4);
 		HDTA.addKs(H,  new Double[]{10.81, 9.79, 2.70, 2.20});
 		HDTA.addKs(Ca, new Double[]{4.60 , 3.70});
 		HDTA.addKs(Mg, new Double[]{4.80 , 3.66});
 		
-		Ligand EDTA = new Ligand("EDTA",null);
+		Ligand EDTA = new Ligand("EDTA", null, 4);
 		EDTA.addKs(H,  new Double[]{10.26, 6.16, 2.67, 1.99});
 		EDTA.addKs(Ca, new Double[]{10.70, 3.51});
 		EDTA.addKs(Mg, new Double[]{8.69 , 2.28});
 		EDTA.addKs(Sr, new Double[]{8.63 , 2.30});	
 		
-		Ligand ADP = new Ligand("ADP",null);
+		Ligand ADP = new Ligand("ADP", null, 3);
 		ADP.addKs(H,  new Double[]{6.68, 3.99, 1.00});
 		ADP.addKs(Ca, new Double[]{2.81, 1.52});
 		ADP.addKs(Mg, new Double[]{3.00, 1.45});
 		ADP.addKs(Sr, new Double[]{2.50, 1.34});	
 		
-		Ligand C2H2O4 = new Ligand("C2H2O4",null);
+		Ligand C2H2O4 = new Ligand("C2H2O4", null, 2);
 		C2H2O4.addKs(H,  new Double[]{3.81, 1.37});
 		C2H2O4.addKs(Ca, new Double[]{3.00});
 		C2H2O4.addKs(Mg, new Double[]{2.55});
 		C2H2O4.addKs(Sr, new Double[]{2.54});	
 		
-		Ligand HPO4 = new Ligand("HPO4",null);
+		Ligand HPO4 = new Ligand("HPO4", null, 2);
 		HPO4.addKs(H,  new Double[]{6.71, 2.1});
 		HPO4.addKs(Ca, new Double[]{1.70});
 		HPO4.addKs(Mg, new Double[]{1.88});

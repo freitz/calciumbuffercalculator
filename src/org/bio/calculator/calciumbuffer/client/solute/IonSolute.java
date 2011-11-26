@@ -6,22 +6,20 @@ import org.bio.calculator.calciumbuffer.client.solution.BufferSolution;
 public class IonSolute
 {
     protected BufferSolution bufferSolution;
-//    private Ion ion;
     protected Double freeConcentration;
     protected Double totalConcentration;
+    protected Double charge;
     
     public enum State {
     	total, free
     }
     
     protected State state;
-//    private Double sumBoundFree;
     protected Double ISC;
     
     public IonSolute(BufferSolution bufferSolution, Ion ion, Double concentration, State state)
     {
         this.bufferSolution = bufferSolution;
-//        this.ion = ion;
         this.state = state;
 
         if (state == State.free)
@@ -33,7 +31,12 @@ public class IonSolute
             totalConcentration = concentration;
         }
     }
-
+    
+    protected double calculateISC()
+    {
+        return freeConcentration * Math.pow(charge, 2)/2;
+    }
+    
     public State getState ()
     {
         return state; 
@@ -63,14 +66,9 @@ public class IonSolute
     {
         totalConcentration = newTotalConcentration; 
     }
-
-    public Double getISC ()
-    {
-        return ISC; 
-    }
     
-    public void setISC (Double newISC)
+    public Double getISC()
     {
-    	ISC = newISC; 
+    	return ISC;
     }
 }

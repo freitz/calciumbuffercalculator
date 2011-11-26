@@ -26,22 +26,22 @@ public class BufferSolute
         return ISC;
     }
 
-    public BufferSolution getBufferSolution ()
+    public BufferSolution getBufferSolution()
     {
         return bufferSolution; 
     }
 
-    public BufferingAgent getBufferingAgent ()
+    public BufferingAgent getBufferingAgent()
     {
         return bufferingAgent; 
     }
 
-    public double concentration ()
+    public double concentration()
     {
         return concentration; 
     }
 
-    public double getISC ()
+    public double getISC()
     {
         return ISC; 
     }

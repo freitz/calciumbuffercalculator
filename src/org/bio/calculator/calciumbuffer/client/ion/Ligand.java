@@ -5,14 +5,14 @@ import java.util.Map;
 
 public class Ligand extends Ion {
 
-        private Map<Metal, Double[]> kConstants = null;
+        private Map<String, Double[]> Ks = null;
         
-        public Ligand(String name, Map<Metal, Double[]> ks) {
-        	super();
+        public Ligand(String name, Map<String, Double[]> ks, int valence) {
+        	super(name, valence, Type.ligand);
         	this.setName(name);
-        	kConstants = ks;
-        	if(kConstants == null) {
-        		kConstants = new HashMap<Metal, Double[]>();
+        	this.Ks = ks;
+        	if(Ks == null) {
+        		Ks = new HashMap<String, Double[]>();
         	}
         }
         
@@ -21,12 +21,15 @@ public class Ligand extends Ion {
         	//if(kConstants.containsKey(metal)) {
         	//	throw new Exception("k-constants are already defined for Ligand " + this + " and metal " + metal);
         	//}
-        	kConstants.put(metal, ks);
+        	Ks.put(metal.getName(), ks);
         }
         
         // returns null if k-constants don't exist for the Metal
         public Double[] getKsFor(Metal m) {
-        	return kConstants.get(m);        
+        	return getKsFor(m.getName());        
         }
         
+        public Double[] getKsFor(String metalName) {
+        	return getKsFor(metalName);        
+        }
 }

@@ -1,92 +1,108 @@
 package org.bio.calculator.calciumbuffer.client.solute;
 
+import java.util.Map;
 import org.bio.calculator.calciumbuffer.client.ion.Ligand;
+import org.bio.calculator.calciumbuffer.client.ion.Metal;
+import org.bio.calculator.calciumbuffer.client.solute.ComplexSolute;
 import org.bio.calculator.calciumbuffer.client.solution.BufferSolution;
 
 public class LigandSolute extends IonSolute
 {
-    private Ligand ligand;
-    private double meanSquareCharge;
+    protected Ligand ligand;
     private BufferSolution bufferSolution;
-    double apparentFreeToTrueFreeRatio;
-    private ComplexSolute[][] complexSolutes;  // 6 x 2 array for metals in row, col
+    Double SUM; //i.e., apparent-free-conc to true-free-conc ratio
+    private Map<Metal, ComplexSolute> complexes = null;
 
-    public LigandSolute (BufferSolution bufferSolution, Ligand ligand, double concentration, State state) {
+    public LigandSolute (BufferSolution bufferSolution, Ligand ligand, Double concentration, State state) {
     	super(bufferSolution,ligand,concentration,state);
         this.ligand = ligand;
         this.bufferSolution = bufferSolution;
-        apparentFreeToTrueFreeRatio = GetApparentFreeToTrueFreeRatio(this);
-//        meanSquareCharge = GetApparentFreeToTrueFreeRatio(this, true) / apparentFreeToTrueFreeRatio;
+        SUM = calculateSUM(5);
+        charge = calculateWeightedSUM(4) / SUM; //i.e., mean square charge
     }
 
-//    private double GetFree()
-//    {
-//        return this.totalConcentration / GetSumBoundPerFree();
-//    }
-//
-//    private double GetTotal()
-//    {
-//        return this.freeConcentration * GetSumBoundPerFree();
-//    }
-
-    public double GetSumBoundPerFree()
+    public void addComplex(Metal metal, ComplexSolute complex) 
     {
-        double result = 1;
+        complexes.put(metal, complex);
+    }
+    
+    public void Update()
+    {
+        if (this.state == State.free)
+        {
+            this.totalConcentration = freeConcentration * calculateSumBoundPerFree();
+        }
+        else
+        {
+            this.freeConcentration = totalConcentration / calculateSumBoundPerFree();
+        }
+        this.ISC = calculateISC();
+    }
+    
+    public Double calculateSumBoundPerFree()
+    {
+        Double result = 1.0;
+        Metal m;
+        
         for (MetalSolute metalSolute : this.bufferSolution.getMetalSoluteList())
         {
-            if (metalSolute.getMetal().getColumn() == 1) // 0 for column Ia, 1 for column IIa
+        	m = metalSolute.getMetal();
+            if (m.getColumn() == 2) 
             {
-                result += this.complexSolutes[metalSolute.getMetal().getRow()][metalSolute.getMetal().getColumn()].getKapp() * metalSolute.freeConcentration;
+                result += getComplexes().get(m).getKapp() * metalSolute.freeConcentration;
             }
         }
         return result;
     }
-
-    private double GetApparentFreeToTrueFreeRatio(LigandSolute ligandSolute)
+    
+    protected Double calculateSUM(int numTerms) 
     {
-    	return GetApparentFreeToTrueFreeRatio(ligandSolute, false);
+        Double result = 0.0;
+        
+        for (int counter = 0; counter < numTerms; counter++) 
+        {
+            result += calculateSUMTerm(counter);
+        }
+
+        return result;
+    }  
+    
+    protected Double calculateWeightedSUM(int numTerms) 
+    {
+        Double result = 0.0;
+        
+        for (int counter = 0; counter < numTerms; counter++) 
+        {
+            result += calculateWeightedSUMTerm(counter, ligand.getValence());
+        }
+
+        return result;
+    }  
+    
+    protected Double calculateSUMTerm(int N)
+    {
+    	Double K;
+    	
+    	if (N==0) { 
+    		K = 1.0; 
+    	}
+    	else { 
+    		K = ligand.getKsFor("H")[N-1] * Math.pow(bufferSolution.getH(), N); 
+    	}
+    	
+    	return K;
     }
     
-    private double GetApparentFreeToTrueFreeRatio(LigandSolute ligandSolute, Boolean weightByCharge)
+    protected Double calculateWeightedSUMTerm(int N, int valence)
     {
-        double K = 1;
-        double result = 0;
-        // TODO: what replaces getK()[0][0]?
-        int count = 0; //ligandSolute.ligand.getK()[0][0].length + 1;
-
-        if (weightByCharge) { count--; }
-
-        for (int counter = 0; counter < count; counter++)
-        {
-            result += K;
-            if (weightByCharge) { result *= Math.pow(ligandSolute.ligand.getValence() - counter, 2); }
-            // TODO: what replaces getK()[0][0]?
-            //K *= ligandSolute.ligand.getK()[0][0][counter] * ligandSolute.bufferSolution.getH();
-        }
-        return result;
+        return calculateSUMTerm(N) * Math.pow(valence - N, 2); 
     }
-
+    
 	public Ligand getLigand() {
 		return ligand;
 	}
 
-	public void setLigand(Ligand ligand) {
-		this.ligand = ligand;
-	}
-
-	public BufferSolution getBufferSolution() {
-		return bufferSolution;
-	}
-
-	public void setBufferSolution(BufferSolution bufferSolution) {
-		this.bufferSolution = bufferSolution;
-	}
-
-	public void setComplexSolutes(ComplexSolute[][] complexSolutes) {
-		this.complexSolutes = complexSolutes;
-	}
-
-	public ComplexSolute[][] getComplexSolutes() {
-		return complexSolutes;
+	public Map<Metal, ComplexSolute> getComplexes() {
+		return complexes;
 	}
 }

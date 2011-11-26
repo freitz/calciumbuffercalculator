@@ -10,6 +10,7 @@ public class Ion {
     protected int valence;
     protected Type type;
 	
+    /*
     public Ion()
 	{
 		this(Type.unknown);
@@ -19,7 +20,8 @@ public class Ion {
 	{
 		this.type = type;
 	}
-	
+	*/
+    
 	public Ion(String name, int valence, Type type)
 	{
 		this.name = name;
@@ -34,11 +36,11 @@ public class Ion {
 	public String getName() {
 		return name;
 	}
-	
+	/*
 	public void setValence(int ionValence) {
 		this.valence = ionValence;
 	}
-	
+	*/
 	public int getValence() {
 		return valence;
 	}
