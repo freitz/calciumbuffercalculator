@@ -1,9 +1,9 @@
-package org.bio.calculator.calciumbuffer.client.ion;
+package org.bio.calculator.calciumbuffer.client.species;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class Ligand extends Ion {
+public class Ligand extends Species {
 
         private Map<String, Double[]> Ks = null;
         
@@ -16,12 +16,12 @@ public class Ligand extends Ion {
         	}
         }
         
-        public void addKs(Metal metal, Double[] ks) //throws Exception
+        public void addKs(String metalName, Double[] ks) //throws Exception
         {
         	//if(kConstants.containsKey(metal)) {
         	//	throw new Exception("k-constants are already defined for Ligand " + this + " and metal " + metal);
         	//}
-        	Ks.put(metal.getName(), ks);
+        	Ks.put(metalName, ks);
         }
         
         // returns null if k-constants don't exist for the Metal

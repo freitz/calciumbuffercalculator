@@ -1,48 +1,23 @@
 package org.bio.calculator.calciumbuffer.client.solute;
 
-import org.bio.calculator.calciumbuffer.client.buffering_agent.BufferingAgent;
 import org.bio.calculator.calciumbuffer.client.solution.BufferSolution;
+import org.bio.calculator.calciumbuffer.client.species.BufferingAgent;
 
-public class BufferSolute
+public class BufferSolute extends Solute
 {
-    private BufferSolution bufferSolution;
     private BufferingAgent bufferingAgent;
-    private double concentration;
-    private double ISC;
 
-    public BufferSolute(BufferSolution bufferSolution, BufferingAgent bufferingAgent, double concentration)
+    public BufferSolute(BufferSolution newBufferSolution, BufferingAgent bufferingAgent, Double concentration)
     {
-        this.bufferSolution = bufferSolution;
-        this.bufferingAgent = bufferingAgent;
-        this.concentration = concentration;
-        ISC = CalculateISC(this);
+        super(newBufferSolution, bufferingAgent, concentration, State.total);
+    	ISC = CalculateISC();
     }
 
-    private double CalculateISC(BufferSolute bufferSolute)
+    private Double CalculateISC()
     {
-        double f = Math.pow(10, bufferSolute.bufferSolution.getpH() - bufferSolute.bufferingAgent.getpKa());
-        double ISC = bufferSolute.concentration * (1 / (1 + f)) / 2;
-        if (bufferSolute.bufferingAgent.getIsAnionic()) ISC *= f;
+        Double f = Math.pow(10, bufferSolution.getpH() - bufferingAgent.getpKa());
+        Double ISC = totalConcentration * (1 / (1 + f)) / 2;
+        if (bufferingAgent.isAnionic()) ISC *= f;
         return ISC;
-    }
-
-    public BufferSolution getBufferSolution()
-    {
-        return bufferSolution; 
-    }
-
-    public BufferingAgent getBufferingAgent()
-    {
-        return bufferingAgent; 
-    }
-
-    public double concentration()
-    {
-        return concentration; 
-    }
-
-    public double getISC()
-    {
-        return ISC; 
     }
 }
