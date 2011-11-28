@@ -1,147 +1,106 @@
 package org.bio.calculator.calciumbuffer.client.solution;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import org.bio.calculator.calciumbuffer.client.solute.IonSolute.State;
-import org.bio.calculator.calciumbuffer.client.solute.BufferSolute;
-import org.bio.calculator.calciumbuffer.client.solute.IonSolute;
-import org.bio.calculator.calciumbuffer.client.solute.LigandSolute;
+import org.bio.calculator.calciumbuffer.client.Calculator;
 import org.bio.calculator.calciumbuffer.client.solute.MetalSolute;
+import org.bio.calculator.calciumbuffer.client.solute.Solute;
+import org.bio.calculator.calciumbuffer.client.species.Species;
+import org.bio.calculator.calciumbuffer.client.species.Species.Type;
 
-public class BufferSolution extends Solution {
+public class BufferSolution {
 
-        private double pH;
-        private double H;
-        private double temperature; // in Celsius
-        
-        private List<BufferSolute> bufferSoluteList = new ArrayList<BufferSolute>();
-        private List<LigandSolute> ligandSoluteList = new ArrayList<LigandSolute>();
-        private List<MetalSolute> metalSoluteList = new ArrayList<MetalSolute>();
-        private List<IonSolute> anionSoluteList = new ArrayList<IonSolute>();
-        private double ISC;
+    private Double pH;
+    private Double H;
+    private Double temperature; // in Celsius
+    
+    private ArrayList<Solute> soluteList;
+    private Double ionicStrength;
 
-        public BufferSolution(double newpH, double newISC, double newTemperature)
-        {
-            pH = newpH;
-            temperature = newTemperature;
-            ISC = newISC;
-            H = CalculateH(pH, temperature, ISC);
-        }
-        
-        public void Iterate(double convergenceCriterion)
-        {
+    public BufferSolution(Double newpH, Double newIonicStrength, Double newTemperature)
+    {
+        pH = newpH;
+        temperature = newTemperature;
+        ionicStrength = newIonicStrength;
+        H = CalculateH(pH, temperature, ionicStrength);
+    }
+    
+    public boolean Iterate(Double convergenceCriterion, int iterationsLimit)
+    {
+    	boolean convergence = false;
+    	boolean stop = false;
+    	int iteration = 0;
+    	Double ionicStrengthGap;
+    	Species.Type type;
+    	
+    	while (!stop)
+    	{
+        	iteration++;
+        	Double newIonicStrength = 0.0;
+        	Double delta = 0.0;
         	
-        	
-        	//TODO:  needs to fix ionic strength with KCl with each iteration
-        	
-        	
-        	
-            /*
-             * last values = 0;
-             * foreach ligand in list, for each metal in list, update free & total
-             * check if converging or diverging; if diverging, error?
-             * check if converged; if so, done, report values
-             * last values = these values, goto 10
-             */
-        }
-
-        public double CalculateH(double pH, double temperature, double ionicStrength)
-        {
-            return Math.pow(10,-pH)/ gammaH(temperature, ionicStrength);
-        }
-
-        private double gammaH(double temperature, double ionicStrength) // per Bers et al. eqn. 15:
-        {
-            double B = 0.522932 * Math.exp(0.0327016 * temperature) + 4.015942;
-            return 0.145045 * Math.exp(-B * ionicStrength) + 0.063546 * Math.exp(-43.97704 * ionicStrength) + 0.695634;
-        }
-
-        public void Add(BufferSolute bufferSolute)
-        {
-            this.bufferSoluteList.add(bufferSolute);
-        }
-
-        public void Add(LigandSolute ligandSolute)
-        {
-            this.ligandSoluteList.add(ligandSolute);
-        }
-
-        public void Add(MetalSolute metalSolute)
-        {
-            this.metalSoluteList.add(metalSolute);
-        }
-
-        public void Add(IonSolute anionSolute)
-        {
-            this.anionSoluteList.add(anionSolute);
-        }
-
-        public double ISC(BufferSolution bufferSolution)  // might be used to find difference between sum-of-parts ISC and desired
-        {
-            double sumISC = 0;
-
-            for (BufferSolute bufferSolute : bufferSolution.bufferSoluteList)
+            for (Solute solute : soluteList)
             {
-                sumISC += bufferSolute.getISC();
+            	newIonicStrength += solute.getISC();
+            	type = solute.getSpecies().getType();
+            	if (type == Type.ligand || type == Type.metal)
+            	{
+            		delta += Math.abs( solute.update() );	
+            	}
             }
-            for (LigandSolute ligandSolute : bufferSolution.ligandSoluteList)
-            {
-                sumISC += ligandSolute.getISC();
-            }
-            for (MetalSolute metalSolute : bufferSolution.metalSoluteList)
-            {
-                sumISC += metalSolute.getISC();
-            }
-            for (IonSolute anionSolute : bufferSolution.anionSoluteList)
-            {
-                sumISC += anionSolute.getISC();
-            }
+            convergence = (delta <= convergenceCriterion);
+            stop = (convergence || (iteration > iterationsLimit));
+            
+            ionicStrengthGap = this.ionicStrength - newIonicStrength;
+            
+            soluteList.add(new MetalSolute(this, Calculator.K , ionicStrengthGap/2, Solute.State.total ));
+            soluteList.add(new Solute(this, Calculator.Cl , ionicStrengthGap/2, Solute.State.total ));
+    	}
+    	
+    	return convergence;
+    }
 
-            return sumISC;
-        }
+    public Double CalculateH(Double pH, Double temperature, Double ionicStrength)
+    {
+        return Math.pow(10,-pH)/ gammaH(temperature, ionicStrength);
+    }
 
-        public double getpH ()
-        {
-            return pH; 
-        }
-        
-        public void setpH (double newpH)
-        {
-            pH = newpH;
-        }
-        
-        public double getH ()
-        {
-            return H; 
-        }
-
-        public void setH (double newH)
-        {
-            H = newH;
-        }
-        
-        public List<BufferSolute> getBufferSoluteList ()
-        {
-            return bufferSoluteList; 
-            //set { _bufferSoluteList = value; }
-        }
-
-        public List<LigandSolute> getLigandSoluteList ()
-        {
-            return ligandSoluteList; 
-            //set { _ligandSoluteList = value; }
-        }
-
-        public List<MetalSolute> getMetalSoluteList()
-        {
-            return metalSoluteList; 
-            //set { _metalSoluteList = value; }
-        }
-
-        public List<IonSolute> getAnionSoluteList()
-        {
-            return anionSoluteList; 
-            //set { _anionSoluteList = value; }
-        }
+    private Double gammaH(Double temperature, Double ionicStrength) // per Bers et al. eqn. 15:
+    {
+        Double B = 0.522932 * Math.exp(0.0327016 * temperature) + 4.015942;
+        return 0.145045 * Math.exp(-B * ionicStrength) + 0.063546 * Math.exp(-43.97704 * ionicStrength) + 0.695634;
+    }
+    
+    public Double getpH ()
+    {
+        return pH; 
+    }
+    
+    public Double getH ()
+    {
+        return H; 
+    }
+    
+    public ArrayList<Solute> getSoluteList()
+    {
+        return soluteList; 
+    }
+    
+    public void add(Solute newSolute)
+    {
+    	int index;
+    	Solute solute;
+    	
+    	if (soluteList.contains(newSolute))
+    	{
+    		index = soluteList.indexOf(newSolute);
+    		solute = soluteList.get(index);
+    		solute.setTotalConcentration(solute.getTotalConcentration() + newSolute.getTotalConcentration());
+    		soluteList.set(index, solute);
+    	}
+    	else
+    	{
+    		soluteList.add(newSolute);
+    	}
+    }
 }

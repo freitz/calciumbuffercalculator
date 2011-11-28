@@ -1,6 +1,6 @@
-package org.bio.calculator.calciumbuffer.client.ion;
+package org.bio.calculator.calciumbuffer.client.species;
 
-public class Metal extends Ion {
+public class Metal extends Species {
 	
     private int column;
     

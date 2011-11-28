@@ -1,22 +1,22 @@
 package org.bio.calculator.calciumbuffer.client.solute;
 
 import java.util.Map;
-import org.bio.calculator.calciumbuffer.client.ion.Ligand;
-import org.bio.calculator.calciumbuffer.client.ion.Metal;
 import org.bio.calculator.calciumbuffer.client.solute.ComplexSolute;
 import org.bio.calculator.calciumbuffer.client.solution.BufferSolution;
+import org.bio.calculator.calciumbuffer.client.species.Ligand;
+import org.bio.calculator.calciumbuffer.client.species.Metal;
+import org.bio.calculator.calciumbuffer.client.species.Species.Type;
 
-public class LigandSolute extends IonSolute
+public class LigandSolute extends Solute
 {
     protected Ligand ligand;
-    private BufferSolution bufferSolution;
     Double SUM; //i.e., apparent-free-conc to true-free-conc ratio
     private Map<Metal, ComplexSolute> complexes = null;
+    protected BufferSolution bufferSolution;
 
-    public LigandSolute (BufferSolution bufferSolution, Ligand ligand, Double concentration, State state) {
-    	super(bufferSolution,ligand,concentration,state);
-        this.ligand = ligand;
-        this.bufferSolution = bufferSolution;
+    public LigandSolute (BufferSolution newBufferSolution, Ligand newLigand, Double concentration, State state) {
+    	super(newBufferSolution, newLigand, concentration, state);
+    	ligand = newLigand;
         SUM = calculateSUM(5);
         charge = calculateWeightedSUM(4) / SUM; //i.e., mean square charge
     }
@@ -26,31 +26,40 @@ public class LigandSolute extends IonSolute
         complexes.put(metal, complex);
     }
     
-    public void Update()
+    public Double update()
     {
-        if (this.state == State.free)
+    	Double delta;
+        if (state == State.free)
         {
-            this.totalConcentration = freeConcentration * calculateSumBoundPerFree();
+            totalConcentration = freeConcentration * calculateSumBoundPerFree();
+            delta = totalConcentration - lastConcentration;
         }
         else
         {
-            this.freeConcentration = totalConcentration / calculateSumBoundPerFree();
+            freeConcentration = totalConcentration / calculateSumBoundPerFree();
+            delta = freeConcentration - lastConcentration;
         }
         this.ISC = calculateISC();
+        return delta;
     }
     
     public Double calculateSumBoundPerFree()
     {
         Double result = 1.0;
+        MetalSolute metalSolute;
         Metal m;
         
-        for (MetalSolute metalSolute : this.bufferSolution.getMetalSoluteList())
+        for (Solute solute : bufferSolution.getSoluteList())
         {
-        	m = metalSolute.getMetal();
-            if (m.getColumn() == 2) 
-            {
-                result += getComplexes().get(m).getKapp() * metalSolute.freeConcentration;
-            }
+        	if (solute.species.getType() == Type.metal)
+        	{
+	        	metalSolute = (MetalSolute) solute;
+	        	m = metalSolute.getMetal();
+	            if (m.getColumn() == 2) 
+	            {
+	                result += getComplexes().get(m).getKapp() * metalSolute.freeConcentration;
+	            }
+        	}
         }
         return result;
     }
@@ -100,6 +109,11 @@ public class LigandSolute extends IonSolute
     
 	public Ligand getLigand() {
 		return ligand;
+	}
+	
+	public BufferSolution getBufferSolution()
+	{
+		return bufferSolution;
 	}
 
 	public Map<Metal, ComplexSolute> getComplexes() {

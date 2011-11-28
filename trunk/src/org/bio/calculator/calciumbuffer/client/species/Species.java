@@ -1,28 +1,16 @@
-package org.bio.calculator.calciumbuffer.client.ion;
+package org.bio.calculator.calciumbuffer.client.species;
 
-public class Ion {
+public class Species {
 
 	public enum Type {
-		ligand, metal, anion, unknown
+		ligand, metal, anion, bufferingAgent, unknown
 	}
     
 	private String name;
     protected int valence;
     protected Type type;
-	
-    /*
-    public Ion()
-	{
-		this(Type.unknown);
-	}
-	
-	public Ion(Type type)
-	{
-		this.type = type;
-	}
-	*/
     
-	public Ion(String name, int valence, Type type)
+	public Species(String name, int valence, Type type)
 	{
 		this.name = name;
 		this.valence = valence;
@@ -36,17 +24,13 @@ public class Ion {
 	public String getName() {
 		return name;
 	}
-	/*
-	public void setValence(int ionValence) {
-		this.valence = ionValence;
-	}
-	*/
+
 	public int getValence() {
 		return valence;
 	}
 	
-	public void setType(Type ionType) {
-		this.type = ionType;
+	public void setType(Type speciesType) {
+		this.type = speciesType;
 	}
 	
 	public Type getType() {

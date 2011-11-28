@@ -8,8 +8,8 @@ public class ComplexSolute extends LigandSolute
     
     public ComplexSolute(LigandSolute ligandSolute, MetalSolute metalSolute)
     {
-    	super (ligandSolute.getBufferSolution(), ligandSolute.getLigand(), 0.0, IonSolute.State.total);
-        SUM = calculateSUM(2);
+    	super (ligandSolute.getBufferSolution(), ligandSolute.getLigand(), 0.0, Solute.State.total);
+    	SUM = calculateSUM(2);
         charge = calculateWeightedSUM(2) / SUM; //i.e. mean square charge
         Kapp = SUM/ligandSolute.SUM; 
     }
@@ -24,11 +24,14 @@ public class ComplexSolute extends LigandSolute
     	return this.calculateSUMTerm(N) * (ligandSolute.getLigand().getValence() - metalSolute.getMetal().getValence());
     }
     
-    public void update()
+    public Double update()
     {
+    	Double delta;
     	totalConcentration = Kapp * ligandSolute.freeConcentration * metalSolute.freeConcentration;
     	freeConcentration = totalConcentration;
+        delta = totalConcentration - lastConcentration;
         ISC = calculateISC();
+        return delta;
     }
     
     public Double getKapp()

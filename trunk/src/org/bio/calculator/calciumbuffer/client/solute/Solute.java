@@ -1,26 +1,24 @@
 package org.bio.calculator.calciumbuffer.client.solute;
 
-import org.bio.calculator.calciumbuffer.client.ion.Ion;
 import org.bio.calculator.calciumbuffer.client.solution.BufferSolution;
+import org.bio.calculator.calciumbuffer.client.species.Species;
 
-public class IonSolute
+public class Solute
 {
     protected BufferSolution bufferSolution;
     protected Double freeConcentration;
     protected Double totalConcentration;
+    protected Double lastConcentration = 0.0;
     protected Double charge;
-    
-    public enum State {
-    	total, free
-    }
-    
+    protected Species species;
     protected State state;
     protected Double ISC;
+    public enum State {total, free}
     
-    public IonSolute(BufferSolution bufferSolution, Ion ion, Double concentration, State state)
+    public Solute(BufferSolution bufferSolution, Species newSpecies, Double concentration, State newState)
     {
-        this.bufferSolution = bufferSolution;
-        this.state = state;
+        species = newSpecies;
+        state = newState;
 
         if (state == State.free)
         {
@@ -42,9 +40,9 @@ public class IonSolute
         return state; 
     }
 
-    public BufferSolution getBufferSolution()
+    public Species getSpecies ()
     {
-        return bufferSolution; 
+        return species; 
     }
 
     public Double getFreeConcentration()
@@ -70,5 +68,10 @@ public class IonSolute
     public Double getISC()
     {
     	return ISC;
+    }
+    
+    public Double update()
+    {
+    	return 0.0;
     }
 }
