@@ -2,7 +2,7 @@ package org.bio.calculator.calciumbuffer.client.solute;
 
 public class ComplexSolute extends LigandSolute
 {
-    private Double Kapp;
+    private  Double Kapp;
     private MetalSolute metalSolute;
     private LigandSolute ligandSolute;
     
