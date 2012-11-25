@@ -47,6 +47,11 @@ public class LineOfInput
         return speciesArray;
     }
     
+    public void setSpeciesArray(Species[] newSpeciesArray)
+    {
+        speciesArray = newSpeciesArray;
+    }
+    
     public String toString()
     {
     	String result;
@@ -54,11 +59,16 @@ public class LineOfInput
     	if (tag==Tag.total){
     		result+="mM ";
     	}
+    	
+    	if (tag==Tag.buffer||tag==Tag.total||tag==Tag.p||tag==Tag.pME){
     	result += " species:[";
     	for(Species s : speciesArray) {
     		result+=s.toString()+",";
     	}
     	result += "]";
+    	}
+    	
+    	
     	return result;
     
     }

@@ -9,20 +9,79 @@ import org.calciumcalculator.shared.species.Species.Type;
 
 public class SpeciesLibrary 
 {
+	public static Map<String, Species> BUFFERENTRIES = null;
+	public static Map<String, Species> NONBUFFERENTRIES = null;
 	public static Map<String, Species> ENTRIES = null;
 	
 	public synchronized static Map<String, Species> getAllEntries() {
 		if(ENTRIES == null) {
 			ENTRIES = new HashMap<String, Species>();
-	    	// TODO: add the rest this way
-	    	ENTRIES.put(H.getName(), H);
-	    	ENTRIES.put(Li.getName(), Li);
+	    		    	
+	    	ENTRIES.put("H" ,H);
+	    	ENTRIES.put("Li", Li);
+	    	ENTRIES.put("Be", Be);
+	    	ENTRIES.put("Na", Na);
+	    	ENTRIES.put("Mg", Mg);
+	    	ENTRIES.put("K" , K);
+	    	ENTRIES.put("Ca", Ca);
+	    	ENTRIES.put("Rb", Rb);
+	    	ENTRIES.put("Sr", Sr);
+	    	ENTRIES.put("Cs", Cs);
+	    	ENTRIES.put("Ba", Ba);
+	    	ENTRIES.put("Fr", Fr);
+	    	ENTRIES.put("Ra", Ra);
+	    	ENTRIES.put("Cl", Cl);
+	    	ENTRIES.put("CP",CP);
+	    	ENTRIES.put("HDTA",HDTA);
+	        ENTRIES.put("EDTA",EDTA);
+	    	ENTRIES.put("ADP",ADP);
+	    	ENTRIES.put("C2H2O4",C2H2O4);
+	    	ENTRIES.put("HPO4",HPO4);
 	    	ENTRIES.put(EGTA.getName(), EGTA);
 	    	ENTRIES.put(ATP.getName(), ATP);
 	    	ENTRIES.put(TES.getName(), TES);
 	    	ENTRIES.put(Imidazole.getName(), Imidazole);
+	    	ENTRIES.put(Tris.getName(), Tris);
 		}
 		return ENTRIES;
+	}
+	
+	public synchronized static Map<String, Species> getBufferEntries() {//to add another buffering agent, add a put line here, in getAllentries, and a declaration at the bottom with other buffering agents
+		if(BUFFERENTRIES == null) {
+			BUFFERENTRIES = new HashMap<String, Species>();
+	    	BUFFERENTRIES.put(TES.getName(), TES);
+	    	BUFFERENTRIES.put(Imidazole.getName(), Imidazole);
+	    	BUFFERENTRIES.put(Tris.getName(), Tris);
+		}
+		return BUFFERENTRIES;
+	}
+	
+	public synchronized static Map<String, Species> getNonBufferEntries() {
+		if(NONBUFFERENTRIES == null) {
+			NONBUFFERENTRIES = new HashMap<String, Species>();
+			
+			NONBUFFERENTRIES.put("H" ,H);
+			NONBUFFERENTRIES.put("Li", Li);
+			NONBUFFERENTRIES.put("Be", Be);
+			NONBUFFERENTRIES.put("Na", Na);
+			NONBUFFERENTRIES.put("Mg", Mg);
+			NONBUFFERENTRIES.put("K" , K);
+			NONBUFFERENTRIES.put("Ca", Ca);
+			NONBUFFERENTRIES.put("Rb", Rb);
+			NONBUFFERENTRIES.put("Sr", Sr);
+			NONBUFFERENTRIES.put("Cs", Cs);
+			NONBUFFERENTRIES.put("Ba", Ba);
+			NONBUFFERENTRIES.put("Fr", Fr);
+			NONBUFFERENTRIES.put("Ra", Ra);
+			NONBUFFERENTRIES.put("Cl", Cl);
+			NONBUFFERENTRIES.put("CP",CP);
+			NONBUFFERENTRIES.put("HDTA",HDTA);
+			NONBUFFERENTRIES.put("EDTA",EDTA);
+			NONBUFFERENTRIES.put("ADP",ADP);
+			NONBUFFERENTRIES.put("C2H2O4",C2H2O4);
+			NONBUFFERENTRIES.put("HPO4",HPO4);
+		}
+		return NONBUFFERENTRIES;
 	}
 
 //  this class is a catalog of metals and commonly used ligands 

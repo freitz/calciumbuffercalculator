@@ -7,25 +7,81 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:VerticalPanel width="474px" height="390px">
+		<g:HTML wordWrap="true">
+		
+		<a href="http://www.google.com">Hello.</a>
+		
+		
+		</g:HTML>
+		<g:VerticalPanel width="500px" height="390px">
+			<!-- buffer box -->
+			<g:HorizontalPanel>
+				<g:Label height="25px" text="Buffer:" width="100px"/>
+				<g:DoubleBox width="124px" ui:field="bufferBox"/>
+				<g:Label height="25px" text="mM   Species:" width="81px"/>
+				<g:ListBox visibleItemCount="1" ui:field="bufferSpeciesListBox"/>
+			</g:HorizontalPanel>
+			<!-- degC box -->
+			<g:HorizontalPanel width="" height="36px">
+				<g:Label height="23px" text="pH:" width="105px"/>
+				<g:DoubleBox width="124px" ui:field="pHBox"/>
+			</g:HorizontalPanel>
+			<!-- degC box -->
+			<g:HorizontalPanel width="" height="36px">
+				<g:Label height="23px" text="Degrees Celsius:" width="105px"/>
+				<g:DoubleBox width="124px" ui:field="degCBox"/>
+			</g:HorizontalPanel>
+			<g:HorizontalPanel>
+				<g:Cell width="">
+					<g:RadioButton name="totalOrFree" text="Total to free |" width="120px" ui:field="totalToFreeRadio"/>
+				</g:Cell>
+			<g:Cell horizontalAlignment="ALIGN_RIGHT">
+				<g:RadioButton name="totalOrFree" text="Free to total" width="129px" ui:field="freeToTotalRadio" checked="true"/>
+			</g:Cell>
+			</g:HorizontalPanel>
+			<g:VerticalPanel ui:field="freeToTotalPanel">
+			<!-- ionicStrength box -->
+			<g:HorizontalPanel width="" height="36px">
+				<g:Label height="23px" text="ionic Strength:" width="105px"/>
+				<g:DoubleBox width="124px" ui:field="ionicStrengthBox"/>
+			</g:HorizontalPanel>
+			<!-- pMg box -->
+			<g:HorizontalPanel width="" height="36px">
+				<g:Label height="23px" text="pMg:" width="105px" />
+				<g:DoubleBox width="124px" ui:field="pMgBox"/>
+			</g:HorizontalPanel>
+			<!-- ionicStrength box -->
+			<g:HorizontalPanel width="" height="36px">
+				<g:Label height="23px" text="pMgA:" width="105px"/>
+				<g:DoubleBox width="124px" ui:field="pMgABox"/>
+			</g:HorizontalPanel>
+			</g:VerticalPanel>
+			<g:Label text="Solute builder:"/>
+			<g:VerticalPanel borderWidth="1">
 			<g:HorizontalPanel width="" height="">
 				<g:Cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
-					<g:Label text="Tag:" width="37px" height="25px"/>
+					<g:Label text="Population:" width="69px" height="25px"/>
 				</g:Cell>
 				<g:ListBox visibleItemCount="1" ui:field="tagListBox"/>
-				<g:Label height="25px" text="Value:" width="39px"/>
+				<g:Label height="25px" text="concentration:" width="83px"/>
 				<g:DoubleBox width="124px" ui:field="valueBox"/>
-				<g:Label height="25px" text="Add Species:" width="80px"/>
+				<g:Label text="mM"/>
+				</g:HorizontalPanel>
+				<g:HorizontalPanel>
+				<g:Label height="25px" text="Add Species:" width="109px"/>
 				<g:ListBox visibleItemCount="1" ui:field="speciesListBox"/>
 				<g:Button ui:field="addButton">add</g:Button>
 			</g:HorizontalPanel>
+			
 			<g:HorizontalPanel width="100%" height="90%">
 				<g:Label height="25px" text="Species Added:" width="147px"/>
 				<g:ListBox visibleItemCount="5" width="216px" ui:field="addListBox"/>
 			</g:HorizontalPanel>
+			</g:VerticalPanel>
 			<g:HorizontalPanel spacing="3">
-				<g:Button ui:field="createButton">create line</g:Button>
-				<g:Button ui:field="testLinesButton">add test lines</g:Button>
+				<g:Button ui:field="createButton" text="Add solute to buffer">create line</g:Button>
+				<g:Button ui:field="testLinesButton" text="use example total to free values">use example total to free values</g:Button>
+				<g:Button text="Use example free to total values" ui:field="testFreeToTotalLinesButton">Use example free to total values</g:Button>
 				<g:Button ui:field="clearLinesButton">clear</g:Button>
 			</g:HorizontalPanel>
 			<g:Cell width="100%">

@@ -73,6 +73,7 @@ public class InputParser
             case pMg:
                 havepMg = true;
                 pMg = newLineOfInput.getValue();
+                newLineOfInput.setSpeciesArray(new Species[]{SpeciesLibrary.getAllEntries().get("Mg"), SpeciesLibrary.getAllEntries().get("Cl"), SpeciesLibrary.getAllEntries().get("Cl")});
                 addFree(newLineOfInput);
                 break;
             case pMgA:
@@ -80,6 +81,7 @@ public class InputParser
                     havepMgA = true;
                     pMgA = newLineOfInput.getValue();
                     newLineOfInput.setValue(-Math.log10(Math.pow(10,(-pMgA + pMg))/Kmga));
+                    newLineOfInput.setSpeciesArray(new Species[]{SpeciesLibrary.getAllEntries().get("ATP"), SpeciesLibrary.getAllEntries().get("Mg"), SpeciesLibrary.getAllEntries().get("Na"), SpeciesLibrary.getAllEntries().get("Na")});
                     addFree(newLineOfInput);
                     
                     //TODO:  refresh free ATP target as Kapp of Mg-ATP complex is refined in successive iterations
