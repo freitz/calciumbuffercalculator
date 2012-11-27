@@ -54,6 +54,7 @@ public class UserInput extends Composite implements HasText {
 	@UiField DoubleBox pMgBox;
 	@UiField DoubleBox pMgABox;
 	@UiField Button testFreeToTotalLinesButton;
+	@UiField VerticalPanel title;
 	Double goalValue;
 
 	interface UserInputUiBinder extends UiBinder<Widget, UserInput> {
