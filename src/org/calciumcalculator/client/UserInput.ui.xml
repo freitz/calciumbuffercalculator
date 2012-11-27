@@ -7,52 +7,67 @@
 		}
 	</ui:style>
 	<g:HTMLPanel>
-		<g:HTML wordWrap="true">
+		<g:Label text="Calcium Buffer Calculator" styleName="h1"/>
+		<g:HTML wordWrap="true" height="550">
 		
-		<a href="http://www.google.com">Hello.</a>
+		<a href="http://code.google.com/p/calciumbuffercalculator">Source/Documentation</a>
 		
 		
 		</g:HTML>
 		<g:VerticalPanel width="500px" height="390px">
 			<!-- buffer box -->
-			<g:HorizontalPanel>
-				<g:Label height="25px" text="Buffer:" width="100px"/>
+			<g:HorizontalPanel height="26px">
+				<g:Cell verticalAlignment="ALIGN_MIDDLE">
+					<g:Label height="25px" text="Buffer conc. (mM):" width="110px"/>
+				</g:Cell>
 				<g:DoubleBox width="124px" ui:field="bufferBox"/>
-				<g:Label height="25px" text="mM   Species:" width="81px"/>
+				<g:Cell verticalAlignment="ALIGN_MIDDLE">
+					<g:Label height="25px" text="Buffer Species:" width="90px"/>
+				</g:Cell>
 				<g:ListBox visibleItemCount="1" ui:field="bufferSpeciesListBox"/>
 			</g:HorizontalPanel>
 			<!-- degC box -->
-			<g:HorizontalPanel width="" height="36px">
-				<g:Label height="23px" text="pH:" width="105px"/>
+			<g:HorizontalPanel width="" height="25px">
+				<g:Cell verticalAlignment="ALIGN_MIDDLE">
+					<g:Label height="23px" text="pH:" width="110px"/>
+				</g:Cell>
 				<g:DoubleBox width="124px" ui:field="pHBox"/>
 			</g:HorizontalPanel>
 			<!-- degC box -->
-			<g:HorizontalPanel width="" height="36px">
-				<g:Label height="23px" text="Degrees Celsius:" width="105px"/>
+			<g:HorizontalPanel width="" height="26px">
+				<g:Cell verticalAlignment="ALIGN_MIDDLE">
+					<g:Label height="23px" text="Degrees Celsius:" width="110px"/>
+				</g:Cell>
 				<g:DoubleBox width="124px" ui:field="degCBox"/>
 			</g:HorizontalPanel>
 			<g:HorizontalPanel>
-				<g:Cell width="">
+				<g:Cell width="" verticalAlignment="ALIGN_MIDDLE">
 					<g:RadioButton name="totalOrFree" text="Total to free |" width="120px" ui:field="totalToFreeRadio"/>
 				</g:Cell>
-			<g:Cell horizontalAlignment="ALIGN_RIGHT">
+			<g:Cell horizontalAlignment="ALIGN_RIGHT" verticalAlignment="ALIGN_MIDDLE">
 				<g:RadioButton name="totalOrFree" text="Free to total" width="129px" ui:field="freeToTotalRadio" checked="true"/>
 			</g:Cell>
 			</g:HorizontalPanel>
 			<g:VerticalPanel ui:field="freeToTotalPanel">
 			<!-- ionicStrength box -->
-			<g:HorizontalPanel width="" height="36px">
-				<g:Label height="23px" text="ionic Strength:" width="105px"/>
+			<g:HorizontalPanel width="" height="25px">
+				<g:Cell verticalAlignment="ALIGN_MIDDLE">
+					<g:Label height="23px" text="ionic Strength:" width="105px"/>
+				</g:Cell>
 				<g:DoubleBox width="124px" ui:field="ionicStrengthBox"/>
 			</g:HorizontalPanel>
 			<!-- pMg box -->
-			<g:HorizontalPanel width="" height="36px">
-				<g:Label height="23px" text="pMg:" width="105px" />
+			<g:HorizontalPanel width="" height="25px">
+				<g:Cell verticalAlignment="ALIGN_MIDDLE">
+					<g:Label height="23px" text="pMg:" width="105px" />
+				</g:Cell>
 				<g:DoubleBox width="124px" ui:field="pMgBox"/>
 			</g:HorizontalPanel>
 			<!-- ionicStrength box -->
-			<g:HorizontalPanel width="" height="36px">
-				<g:Label height="23px" text="pMgA:" width="105px"/>
+			<g:HorizontalPanel width="" height="25px">
+				<g:Cell verticalAlignment="ALIGN_MIDDLE">
+					<g:Label height="23px" text="pMgA:" width="105px"/>
+				</g:Cell>
 				<g:DoubleBox width="124px" ui:field="pMgABox"/>
 			</g:HorizontalPanel>
 			</g:VerticalPanel>
