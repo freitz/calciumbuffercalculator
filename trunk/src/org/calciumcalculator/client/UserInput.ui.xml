@@ -8,6 +8,8 @@
 	</ui:style>
 	<g:HTMLPanel>
 		<g:Label text="Calcium Buffer Calculator" styleName="h1"/>
+		<g:Label styleName="h1" text="last updated 11/26/12"/>
+		<g:Label styleName="h1" text="cf. Reitz, F. B., DeMorrow, J. E., &amp; Mock, R. J. Java/Javascript software for calcium buffer calculations.  in prep."/>
 		<g:HTML wordWrap="true" height="550">
 		
 		<a href="http://code.google.com/p/calciumbuffercalculator">Source/Documentation</a>
