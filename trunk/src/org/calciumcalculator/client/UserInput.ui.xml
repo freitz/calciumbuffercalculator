@@ -6,27 +6,27 @@
 			font-weight: bold;
 		}
 	</ui:style>
-	<g:HTMLPanel>
-		<g:Label text="Calcium Buffer Calculator" styleName="h1"/>
-		<g:Label styleName="h1" text="last updated 11/26/12"/>
-		<g:Label styleName="h1" text="cf. Reitz, F. B., DeMorrow, J. E., &amp; Mock, R. J. Java/Javascript software for calcium buffer calculations.  in prep."/>
-		<g:HTML wordWrap="true" height="550">
+	<g:HTMLPanel width="6000" height="7000">
+		<g:HTML wordWrap="true" height="550" ui:field="lnk1" width="392px">
+		<h2>Calcium Buffer Calculator</h2>
+		<p><i>last updated 12/2/12</i></p>
+		<p><i>cf. Reitz, F. B., DeMorrow, J. E., &amp; Mock, R. J. Java/Javascript software for calcium buffer calculations.  in prep.</i></p>
+		<p><b><a href="http://code.google.com/p/calciumbuffercalculator">Source/Documentation</a></b></p>
 		
-		<a href="http://code.google.com/p/calciumbuffercalculator">Source/Documentation</a>
 		
 		
 		</g:HTML>
-		<g:VerticalPanel width="500px" height="390px">
+		<g:VerticalPanel width="389px" height="390px">
 			<!-- buffer box -->
 			<g:HorizontalPanel height="26px">
 				<g:Cell verticalAlignment="ALIGN_MIDDLE">
 					<g:Label height="25px" text="Buffer conc. (mM):" width="110px"/>
 				</g:Cell>
 				<g:DoubleBox width="124px" ui:field="bufferBox"/>
-				<g:Cell verticalAlignment="ALIGN_MIDDLE">
-					<g:Label height="25px" text="Buffer Species:" width="90px"/>
+				<g:Cell verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_RIGHT">
+					<g:Label height="25px" text="Buffer Species:" width="181px"/>
 				</g:Cell>
-				<g:ListBox visibleItemCount="1" ui:field="bufferSpeciesListBox"/>
+				<g:ListBox visibleItemCount="1" ui:field="bufferSpeciesListBox" width="103px"/>
 			</g:HorizontalPanel>
 			<!-- degC box -->
 			<g:HorizontalPanel width="" height="25px">
@@ -74,42 +74,44 @@
 			</g:HorizontalPanel>
 			</g:VerticalPanel>
 			<g:Label text="Solute builder:"/>
-			<g:VerticalPanel borderWidth="1">
+			<g:VerticalPanel borderWidth="1" width="523px">
+				<g:HorizontalPanel>
+				<g:Label height="25px" text="Add Species:" width="109px"/>
+				<g:ListBox visibleItemCount="1" ui:field="speciesListBox" width="160px"/>
+				<g:Label width="45px" height="19px"/>
+				<g:Button ui:field="addButton" width="205px">add</g:Button>
+			</g:HorizontalPanel>
+			
+			<g:VerticalPanel width="480px" height="90%">
+				<g:Label height="25px" text="Species Added:" width="162px"/>
+				<g:ListBox visibleItemCount="5" width="519px" ui:field="addListBox"/>
+			</g:VerticalPanel>
 			<g:HorizontalPanel width="" height="">
 				<g:Cell horizontalAlignment="ALIGN_CENTER" verticalAlignment="ALIGN_MIDDLE">
 					<g:Label text="Population:" width="69px" height="25px"/>
 				</g:Cell>
-				<g:ListBox visibleItemCount="1" ui:field="tagListBox"/>
-				<g:Label height="25px" text="concentration:" width="83px"/>
-				<g:DoubleBox width="124px" ui:field="valueBox"/>
-				<g:Label text="mM"/>
+				<g:ListBox visibleItemCount="1" ui:field="tagListBox" width="91px"/>
+				<g:Cell horizontalAlignment="ALIGN_RIGHT">
+					<g:Label height="25px" text="concentration (mM):" width="182px"/>
+				</g:Cell>
+				<g:DoubleBox width="173px" ui:field="valueBox"/>
 				</g:HorizontalPanel>
-				<g:HorizontalPanel>
-				<g:Label height="25px" text="Add Species:" width="109px"/>
-				<g:ListBox visibleItemCount="1" ui:field="speciesListBox"/>
-				<g:Button ui:field="addButton">add</g:Button>
-			</g:HorizontalPanel>
-			
-			<g:HorizontalPanel width="100%" height="90%">
-				<g:Label height="25px" text="Species Added:" width="147px"/>
-				<g:ListBox visibleItemCount="5" width="216px" ui:field="addListBox"/>
-			</g:HorizontalPanel>
 			</g:VerticalPanel>
 			<g:HorizontalPanel spacing="3">
-				<g:Button ui:field="createButton" text="Add solute to buffer">create line</g:Button>
-				<g:Button ui:field="testLinesButton" text="use example total to free values">use example total to free values</g:Button>
-				<g:Button text="Use example free to total values" ui:field="testFreeToTotalLinesButton">Use example free to total values</g:Button>
-				<g:Button ui:field="clearLinesButton">clear</g:Button>
+				<g:Button ui:field="createButton" text="Add solute to buffer" width="119px">create line</g:Button>
+				<g:Button ui:field="testLinesButton" text="use example total to free values" width="155px">use example total to free values</g:Button>
+				<g:Button text="Use example free to total values" ui:field="testFreeToTotalLinesButton" width="163px">Use example free to total values</g:Button>
+				<g:Button ui:field="clearLinesButton" height="47px" width="74px">clear</g:Button>
 			</g:HorizontalPanel>
 			<g:Cell width="100%">
 				<g:Label text="Lines of Input:"/>
 			</g:Cell>
-			<g:ListBox visibleItemCount="5" width="100%" ui:field="linesOfInputListBox"/>
+			<g:ListBox visibleItemCount="5" width="524px" ui:field="linesOfInputListBox"/>
 			<g:HorizontalPanel spacing="3">
-				<g:Button ui:field="calculateButton">calculate</g:Button>
-				<g:Button ui:field="clearOutputButton">clear</g:Button>
+				<g:Button ui:field="calculateButton" width="256px">calculate</g:Button>
+				<g:Button ui:field="clearOutputButton" width="263px">clear</g:Button>
 			</g:HorizontalPanel>
-			<g:TextArea width="100%" height="300px" characterWidth="200" visibleLines="20" ui:field="outputTextArea"/>
+			<g:TextArea width="518px" height="300px" characterWidth="200" visibleLines="20" ui:field="outputTextArea"/>
 		</g:VerticalPanel>
 	</g:HTMLPanel>
 </ui:UiBinder> 

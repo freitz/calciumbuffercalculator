@@ -103,6 +103,7 @@ public class SpeciesLibrary
     public static Species Fr = new Species("Fr", 1, Type.metal);
     public static Species Ra = new Species("Ra", 2, Type.metal);
     public static Species Cl = new Species("Cl", 1, Type.anion);
+    //public static Species Cl = new Species("Cl", -1, Type.metal);
     
     public static Ligand EGTA = new Ligand("EGTA", 4);
     {

@@ -2,6 +2,7 @@ package org.calciumcalculator.shared.solution;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import com.google.gwt.i18n.client.NumberFormat;
 
 import org.calciumcalculator.shared.SpeciesLibrary;
 import org.calciumcalculator.shared.solute.BufferSolute;
@@ -343,7 +344,8 @@ public class BufferSolution {
     }
 
     public String prettyNum(Double number){
-    	return number.toString();
+    	        return NumberFormat.getFormat("0.000E00").format(number); 
+    	    
     }
     
     private void sortBuffer(){

@@ -24,6 +24,8 @@ import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.ui.RadioButton;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.HTML;
 
 public class UserInput extends Composite implements HasText {
 	private List<LineOfInput> lines = new LinkedList<LineOfInput>();
@@ -54,7 +56,11 @@ public class UserInput extends Composite implements HasText {
 	@UiField DoubleBox pMgBox;
 	@UiField DoubleBox pMgABox;
 	@UiField Button testFreeToTotalLinesButton;
-	@UiField VerticalPanel title;
+	//@UiField VerticalPanel title;
+	//@UiField Label txt1;
+	//@UiField Label txt2;
+	//@UiField Label txt3;
+	@UiField HTML lnk1;
 	Double goalValue;
 
 	interface UserInputUiBinder extends UiBinder<Widget, UserInput> {
@@ -157,41 +163,63 @@ public class UserInput extends Composite implements HasText {
 	
 	@UiHandler("calculateButton")
 	void onButtonClick_2(ClickEvent event) {
-		//buffer 
-				Tag tag = Tag.buffer;
-				Double value = bufferBox.getValue();
-				Species[] species = new Species[1];
-				species[0] = SpeciesLibrary.getAllEntries().get(bufferSpeciesListBox.getItemText(bufferSpeciesListBox.getSelectedIndex()));
-				addNewLineOfInput(tag, value, species);
-				//pH
-				tag = Tag.pH;
-				value = pHBox.getValue();
-				species = new Species[0];
-				addNewLineOfInput(tag, value, species);
-				//degC
-				tag = Tag.degC;
-				value = degCBox.getValue();
-				species = new Species[0];
-				addNewLineOfInput(tag, value, species);
+		 
+		Tag tag;
+		Double value;
+		Species[] species;
+		
+		addNewLineOfInput(Tag.total,0.0,new Species[]{SpeciesLibrary.Cl});
+		
+		if(goalValue==2){//if free to total
+			
+			//pMgA
+			tag = Tag.pMgA;
+			value = pMgABox.getValue();
+			species = new Species[0];
+			addNewLineOfInput(tag, value, species);
+			//pMg
+			tag = Tag.pMg;
+			value = pMgBox.getValue();
+			species = new Species[0];
+			addNewLineOfInput(tag, value, species);
+			
+			
+			}
+		//buffer
+		tag = Tag.buffer;
+		 value = bufferBox.getValue();
+		species = new Species[1];
+		species[0] = SpeciesLibrary.getAllEntries().get(bufferSpeciesListBox.getItemText(bufferSpeciesListBox.getSelectedIndex()));
+		addNewLineOfInput(tag, value, species);
+		
+		if(goalValue==2){//if free to total
+			//ionicStrength
+			tag = Tag.ionicStrength;
+			value = ionicStrengthBox.getValue();
+			species = new Species[0];
+			addNewLineOfInput(tag, value, species);
+		}
+		//pH
+		tag = Tag.pH;
+		value = pHBox.getValue();
+		species = new Species[0];
+		addNewLineOfInput(tag, value, species);
+		//degC
+		tag = Tag.degC;
+		value = degCBox.getValue();
+		species = new Species[0];
+		addNewLineOfInput(tag, value, species);
+		
 				//goal
+		  		species = new Species[0];
 				addNewLineOfInput(Tag.goal,goalValue,species);
-				if(goalValue==2){//if free to total
-				//ionicStrength
-				tag = Tag.ionicStrength;
-				value = ionicStrengthBox.getValue();
-				species = new Species[0];
-				addNewLineOfInput(tag, value, species);
-				//pMg
-				tag = Tag.pMg;
-				value = pMgBox.getValue();
-				species = new Species[0];
-				addNewLineOfInput(tag, value, species);
-				//pMg
-				tag = Tag.pMgA;
-				value = pMgABox.getValue();
-				species = new Species[0];
-				addNewLineOfInput(tag, value, species);
-				}
+				
+				
+				
+				
+				
+				
+				
 		InputParser parser = new InputParser();
 		for(LineOfInput line : lines) {
 			parser.parse(line);
@@ -358,10 +386,10 @@ public class UserInput extends Composite implements HasText {
         
         //user specifies total value of 5 for Species[] {K, K, H, H, HDTA}, i.e. K2H2HDTA
         addNewLineOfInput(Tag.total, 5.0, new Species[]{SpeciesLibrary.K, SpeciesLibrary.K, SpeciesLibrary.HDTA}); //H, OH are subsumed in pH specification
-        
+       // addNewLineOfInput(Tag.total, 5.0, new Species[]{SpeciesLibrary.Na, SpeciesLibrary.Na, SpeciesLibrary.HDTA});
       //user specifies total value of 0.004899189 for Species[] {K, K, H, H, EGTA}, i.e. K2H2EGTA
         addNewLineOfInput(Tag.total, 5.0, new Species[]{SpeciesLibrary.K, SpeciesLibrary.K, SpeciesLibrary.EGTA}); //H, OH are subsumed in pH specification
-        
+        //addNewLineOfInput(Tag.total, 5.0, new Species[]{SpeciesLibrary.Na, SpeciesLibrary.Na, SpeciesLibrary.EGTA});
         addNewLineOfInput(Tag.pME, 6.0, new Species[]{SpeciesLibrary.Sr}); 
         
         //user specifies total value of 0.16087 for Species[] {Ca, Cl, Cl}, i.e. CaCl2

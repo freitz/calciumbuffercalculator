@@ -126,7 +126,7 @@ public class ComplexSolute extends LigandSolute
     
     @Override
     public String toString(){
-        return "complex with "+metalSolute.getSpecies().getName()+
+        return "cplx w/ "+metalSolute.getSpecies().getName()+
             ":  []: "+prettyNum(getFreeConcentration())+
             "; charge: "+prettyNum(getCharge())+
             "; Kapp: "+prettyNum(Kapp)+

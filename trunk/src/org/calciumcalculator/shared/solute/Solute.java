@@ -4,6 +4,8 @@ import java.util.Comparator;
 import org.calciumcalculator.shared.solution.BufferSolution;
 import org.calciumcalculator.shared.species.Species;
 
+import com.google.gwt.i18n.client.NumberFormat;
+
 public class Solute //extends Species (would extend but there are different species types
 {
 // once a Species is associated with a buffersolution it becomes a "Solute" [MAYBE SHOULD EXTEND?],
@@ -133,7 +135,7 @@ public class Solute //extends Species (would extend but there are different spec
     }
 
     public String prettyNum(Double number){
-    	return number.toString();
+    	return NumberFormat.getFormat("0.000E00").format(number); 
     }
     
     public BufferSolution getBufferSolution() {
