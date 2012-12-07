@@ -19,7 +19,7 @@ The fields at top of the calculator are required --
 
 Given the above required fields, the calculator can in principle model a buffer.  
 
-Further molecular species are added using the "solute builder".  The user builds each species to be added an atom/sub-species at a time, with the drop-down menu and "add" button, e.g. to add K2CaEGTA, the user selects "K", clicks "add" twice, selects "Ca", clicks "add", and selects "EGTA" and clicks "add".  The "species added" list shows "K, K, Ca, EGTA", explicitly specifying the K2CaEGTA as a molecular species.  The user then specifies via the "population" drop-down menu whether this species is being added as a total amount ("total") or as a desired free concentration ("p" or "pME"), and the corresponding concentration, in mM, entered. 
+Further molecular species are added using the "solute builder".  The user builds each species to be added an atom/sub-species at a time, with the drop-down menu and "add" button, e.g. to add K2CaEGTA, the user selects "K", clicks "add" twice, selects "Ca", clicks "add", and selects "EGTA" and clicks "add".  The "species added" list shows "K, K, Ca, EGTA", explicitly specifying the K2CaEGTA as a molecular species.  The user then specifies via the "population" drop-down menu whether this species is being added as a total amount ("total") or as a desired free concentration ("p" or "pME", if the species is a divalent metal assumed added in 1:1 ratio with the predominant chelator in question, typically this refers to Ca added with EGTA), and the corresponding concentration, in mM, entered. 
 
 With the solute thus specified, the user clicks "add solute to buffer" to add the solute virtually to the model buffer, and is listed in the "lines of input" box.  
 
