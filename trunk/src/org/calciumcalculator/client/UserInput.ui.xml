@@ -9,8 +9,8 @@
 	<g:HTMLPanel width="6000" height="7000">
 		<g:HTML wordWrap="true" height="550" ui:field="lnk1" width="392px">
 		<h2>Calcium Buffer Calculator</h2>
-		<p><i>last updated 12/2/12</i></p>
-		<p><i>cf. Reitz, F. B., DeMorrow, J. E., &amp; Mock, R. J. Java/Javascript software for calcium buffer calculations.  in prep.</i></p>
+		<p><i>last updated 1/3/12</i></p>
+		<p><i>cf. Reitz, F. B., DeMorrow, J. E., &amp; Mock, R. J. Java/Javascript software for calcium buffer calculations. (submitted)</i></p>
 		<p><b><a href="http://code.google.com/p/calciumbuffercalculator">Source/Documentation</a></b></p>
 		
 		
