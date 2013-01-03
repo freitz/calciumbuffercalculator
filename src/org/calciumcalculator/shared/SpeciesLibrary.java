@@ -80,6 +80,8 @@ public class SpeciesLibrary
 			NONBUFFERENTRIES.put("ADP",ADP);
 			NONBUFFERENTRIES.put("C2H2O4",C2H2O4);
 			NONBUFFERENTRIES.put("HPO4",HPO4);
+			NONBUFFERENTRIES.put(EGTA.getName(), EGTA);
+			NONBUFFERENTRIES.put(ATP.getName(), ATP);
 		}
 		return NONBUFFERENTRIES;
 	}

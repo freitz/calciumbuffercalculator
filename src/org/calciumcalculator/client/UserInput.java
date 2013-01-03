@@ -81,7 +81,7 @@ public class UserInput extends Composite implements HasText {
 		//}
 		tagListBox.addItem("total");
 		tagListBox.addItem("p");
-		tagListBox.addItem("pME");
+		//tagListBox.addItem("pME");
 		goalValue=2.0;
 	}
 
@@ -386,8 +386,8 @@ public class UserInput extends Composite implements HasText {
         
         //user specifies total value of 5 for Species[] {K, K, H, H, HDTA}, i.e. K2H2HDTA
         addNewLineOfInput(Tag.total, 5.0, new Species[]{SpeciesLibrary.K, SpeciesLibrary.K, SpeciesLibrary.HDTA}); //H, OH are subsumed in pH specification
-       // addNewLineOfInput(Tag.total, 5.0, new Species[]{SpeciesLibrary.Na, SpeciesLibrary.Na, SpeciesLibrary.HDTA});
-      //user specifies total value of 0.004899189 for Species[] {K, K, H, H, EGTA}, i.e. K2H2EGTA
+        // addNewLineOfInput(Tag.total, 5.0, new Species[]{SpeciesLibrary.Na, SpeciesLibrary.Na, SpeciesLibrary.HDTA});
+        //user specifies total value of 0.004899189 for Species[] {K, K, H, H, EGTA}, i.e. K2H2EGTA
         addNewLineOfInput(Tag.total, 5.0, new Species[]{SpeciesLibrary.K, SpeciesLibrary.K, SpeciesLibrary.EGTA}); //H, OH are subsumed in pH specification
         //addNewLineOfInput(Tag.total, 5.0, new Species[]{SpeciesLibrary.Na, SpeciesLibrary.Na, SpeciesLibrary.EGTA});
         addNewLineOfInput(Tag.pME, 6.0, new Species[]{SpeciesLibrary.Sr}); 
